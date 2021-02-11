@@ -1,9 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
-    <exclude-output />
-    <content url="file://$MODULE_DIR$" />
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="minecraft" name="Minecraft">
+      <configuration>
+        <autoDetectTypes>
+          <platformType>MIXIN</platformType>
+        </autoDetectTypes>
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_14">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
+    </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: com.github.Minestom:Minestom:04c792c302" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-text:1.9" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.11" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-handler:4.1.58.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-common:4.1.58.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-resolver:4.1.58.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-buffer:4.1.58.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-transport:4.1.58.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-codec:4.1.58.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-transport-native-epoll:linux-x86_64:4.1.58.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-transport-native-unix-common:4.1.58.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-transport-native-kqueue:osx-x86_64:4.1.58.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty.incubator:netty-incubator-transport-native-io_uring:linux-x86_64:0.0.3.Final" level="project" />
+    <orderEntry type="library" name="Maven: it.unimi.dsi:fastutil:8.4.4" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.6" level="project" />
+    <orderEntry type="library" name="Maven: com.github.Articdive:Jnoise:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.rocksdb:rocksdbjni:6.15.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-core:2.14.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.14.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-slf4j-impl:2.14.0" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
+    <orderEntry type="library" name="Maven: com.google.guava:guava:21.0" level="project" />
+    <orderEntry type="library" name="Maven: com.mojang:authlib:1.5.21" level="project" />
+    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.9" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:2.0.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:2.4" level="project" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm:9.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm-tree:9.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm-analysis:9.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm-util:9.0" level="project" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm-commons:9.0" level="project" />
+    <orderEntry type="library" name="Maven: org.spongepowered:mixin:0.8.1" level="project" />
+    <orderEntry type="library" name="Maven: com.github.MadMartian:hydrazine-path-finding:1.5.2" level="project" />
+    <orderEntry type="library" name="Maven: com.github.MadMartian:data-structures:2.9" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.21" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.4.21" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.4.21" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.21" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-reflect:1.4.21" level="project" />
+    <orderEntry type="library" name="Maven: com.github.jglrxavpok:Hephaistos:v1.1.7" level="project" />
+    <orderEntry type="library" name="Maven: org.antlr:antlr4-runtime:4.8-1" level="project" />
+    <orderEntry type="library" name="Maven: com.github.jglrxavpok:Hephaistos:gson:v1.1.7" level="project" />
+    <orderEntry type="library" name="Maven: com.github.Minestom:DependencyGetter:v1.0.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-depchain:3.1.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-api:3.1.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-spi:3.1.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-api-maven:3.1.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven:maven-model:3.6.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-spi-maven:3.1.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-api-maven-archive:3.1.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jboss.shrinkwrap:shrinkwrap-api:1.2.6" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-impl-maven:3.1.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven:maven-resolver-provider:3.6.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: javax.inject:javax.inject:1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven:maven-model-builder:3.6.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven:maven-artifact:3.6.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven:maven-builder-support:3.6.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.eclipse.sisu:org.eclipse.sisu.inject:0.3.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven:maven-repository-metadata:3.6.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven:maven-settings:3.6.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven:maven-settings-builder:3.6.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven.resolver:maven-resolver-api:1.4.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven.resolver:maven-resolver-impl:1.4.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven.resolver:maven-resolver-spi:1.4.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven.resolver:maven-resolver-util:1.4.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven.resolver:maven-resolver-connector-basic:1.4.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven.resolver:maven-resolver-transport-wagon:1.4.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.codehaus.plexus:plexus-interpolation:1.25" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.codehaus.plexus:plexus-utils:3.2.1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.sonatype.plexus:plexus-sec-dispatcher:1.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.sonatype.plexus:plexus-cipher:1.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven.wagon:wagon-provider-api:3.3.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven.wagon:wagon-file:3.3.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven.wagon:wagon-http-lightweight:2.12" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven.wagon:wagon-http-shared:2.12" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jsoup:jsoup:1.7.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-impl-maven-archive:3.1.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jboss.shrinkwrap:shrinkwrap-impl-base:1.2.6" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jboss.shrinkwrap:shrinkwrap-spi:1.2.6" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-spi-maven-archive:3.1.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.eclipse.sisu:org.eclipse.sisu.plexus:0.3.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.codehaus.plexus:plexus-compiler-javac:2.7" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.codehaus.plexus:plexus-compiler-api:2.7" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-api-maven-embedded:3.1.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.maven.shared:maven-invoker:3.0.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.codehaus.plexus:plexus-component-annotations:1.7" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.jboss.shrinkwrap.resolver:shrinkwrap-resolver-impl-maven-embedded:3.1.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.arquillian.spacelift:arquillian-spacelift:1.0.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.arquillian.spacelift:arquillian-spacelift-api:1.0.2" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.commons:commons-compress:1.8.1" level="project" />
+    <orderEntry type="library" name="Maven: org.reflections:reflections:0.9.12" level="project" />
+    <orderEntry type="library" name="Maven: org.javassist:javassist:3.26.0-GA" level="project" />
+    <orderEntry type="library" name="Maven: org.json:json:20190722" level="project" />
+    <orderEntry type="library" name="Maven: net.kyori:adventure-api:4.5.0" level="project" />
+    <orderEntry type="library" name="Maven: net.kyori:adventure-key:4.5.0" level="project" />
+    <orderEntry type="library" name="Maven: net.kyori:examination-api:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: net.kyori:examination-string:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.checkerframework:checker-qual:3.10.0" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains:annotations:20.1.0" level="project" />
   </component>
 </module>

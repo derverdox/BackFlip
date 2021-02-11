@@ -22,8 +22,8 @@ public class BackFlip {
      » WeltGenerator (Werden wir save nicht selber schreiben, aber es gibt bereits ein paar gute für Minestom soweit ich weis :D
      » Eigenes BlockState System -> Das von Minestom ist bisschen unübersichtlich
      » Eigenes WorldManager System (Chunks laden ; Entladen ; Ist sowieso Performant weil Minestom nur die Frage ist wann :D-> Minestom Events)
-     » Eigenes Event System? Oder lieber das von Minestom erweitern
-     » Für Commands auch das Minestom Command System
+     » Eigenes Event System? Oder lieber das von Minestom erweitern (TNLEventAPI)
+     » Für Commands auch das Minestom Command System (TNLCommandAPI)
      » Eigene Plugin Schnittstelle? Oder lieber das Minestom Erweiterungssystem nutzen? (Vermutlich eigene damit die User eher mit unserer API arbeiten)
      ----------
      » Vanilla kram reimplementieren
@@ -40,10 +40,11 @@ public class BackFlip {
     public static void main(String[] args) {
 
         MinecraftServer minecraftServer = MinecraftServer.init();
+        MinecraftServer.setBrandName(getVersion());
         MojangAuth.init();
         OptifineSupport.enable();
 
-        //TODO Properties File generieren bzw auslesen? nope json file <3 (org.json)
+        // TODO: Properties File generieren bzw auslesen? nope json file <3 (org.json)
 
         minecraftServer.start("localhost", 25565, (playerConnection, responseData) -> {
             responseData.setMaxPlayer(0);
