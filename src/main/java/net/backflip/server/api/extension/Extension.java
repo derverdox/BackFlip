@@ -1,4 +1,4 @@
-package net.backflip.server.api.plugin;
+package net.backflip.server.api.extension;
 
 import net.backflip.server.annotations.*;
 
@@ -40,7 +40,7 @@ public @interface Extension {
     The authors of the extension.
      */
 
-    @Nonnull Contributors contributors() default @Contributors;
+    @Nonnull Contributor[] contributors() default {@Contributor};
 
     /*
     Some credit information

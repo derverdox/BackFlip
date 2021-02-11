@@ -1,7 +1,7 @@
 package net.backflip.server;
 
 import net.backflip.server.annotations.*;
-import net.backflip.server.api.plugin.*;
+import net.backflip.server.api.extension.*;
 import net.backflip.server.enumerations.Month;
 import net.backflip.server.world.WorldManager;
 import net.minestom.server.MinecraftServer;
@@ -15,9 +15,9 @@ import java.util.UUID;
         description = "default backflip extension",
         version = "0.1",
         credits = @Links(),
-        contributors = @Contributors(contributors = {
-                @Contributor(firstname = "Lukas", lastname = "Jonsson", pseudonym = "Verdox", contact = @Contact(mail = "", website = @URL(url = "https://yourserverpromo.de"), discord = "Verdox#2347")),
-                @Contributor(firstname = "David", lastname = "Kirschner", pseudonym = "NonSwag", age = 17, birthday = @Date(day = 17, month = Month.SEPTEMBER, year = 2003), contact = @Contact(mail = "kirschner.david@thenextlvl.net", website = @URL(url = "https://www.thenextlvl.net"), discord = "NonSwag#8443", twitter = "@OfficialNonSwag"))}),
+        contributors = {
+                @Contributor(firstname = "Lukas", lastname = "Jonsson", pseudonym = "Verdox", contact = @Contact(website = @URL(url = "https://yourserverpromo.de"), discord = "Verdox#2347")),
+                @Contributor(firstname = "David", lastname = "Kirschner", pseudonym = "NonSwag", age = 17, birthday = @Date(day = 17, month = Month.SEPTEMBER, year = 2003), contact = @Contact(mail = "kirschner.david@thenextlvl.net", website = @URL(url = "https://www.thenextlvl.net"), discord = "NonSwag#8443", twitter = "@OfficialNonSwag"))},
         links = @Links(download = @URL(url = ""), github = @URL(url = ""), gitlab = @URL(url = ""), source = @URL(url = ""), website = @URL(url = "")))
 public class BackFlip {
 
@@ -47,10 +47,11 @@ public class BackFlip {
      */
 
     @Nonnull
-    private static final String version = "BackFlip v0.1";
+    private static final BackFlip instance = new BackFlip(true, true);
 
-    @Nonnull
-    private static BackFlip instance;
+    static {
+        getInstance().startServer();
+    }
 
     @Nonnull
     public static BackFlip getInstance() {
@@ -58,49 +59,53 @@ public class BackFlip {
     }
 
     @Nonnull
-    public static String getVersion() {
-        return version;
+    public String getVersion() {
+        return "BackFlip v0.1";
     }
 
-    @Inject
-    public static void main(String[] args) {
-        BackFlip backFlip = new BackFlip(true,true);
-        backFlip.startServer();
+    @Nonnull private final MinecraftServer server;
+    @Nonnull private final WorldManager worldManager;
+    private final boolean mojangAuth;
+    private final boolean optifineSupport;
+
+    protected BackFlip(boolean mojangAuth, boolean optifineSupport) {
+        this.mojangAuth = mojangAuth;
+        this.optifineSupport = optifineSupport;
+        this.server = MinecraftServer.init();
+        this.worldManager = new WorldManager(getInstance(), 6);
     }
 
-    private final MinecraftServer minecraftServer;
-    private final boolean enableMojangAuth;
-    private final boolean enableOptifineSupport;
-    private final WorldManager worldManager;
-
-    protected BackFlip(boolean enableMojangAuth, boolean enableOptifineSupport){
-        this.minecraftServer = MinecraftServer.init();
-        this.enableMojangAuth = enableMojangAuth;
-        this.enableOptifineSupport = enableOptifineSupport;
-        this.worldManager = new WorldManager(this);
+    @Nonnull
+    public MinecraftServer getServer() {
+        return server;
     }
 
-    void startServer(){
+    @Nonnull
+    public WorldManager getWorldManager() {
+        return worldManager;
+    }
 
-        if(enableMojangAuth)
+    public boolean isMojangAuth() {
+        return mojangAuth;
+    }
+
+    public boolean isOptifineSupport() {
+        return optifineSupport;
+    }
+
+    protected void startServer() {
+        if (isMojangAuth()) {
             MojangAuth.init();
-        if(enableOptifineSupport)
+        }
+        if (isOptifineSupport()) {
             OptifineSupport.enable();
-
-        minecraftServer.start("localhost", 25565, (playerConnection, responseData) -> {
+        }
+        getServer().start("localhost", 25565, (playerConnection, responseData) -> {
             responseData.setMaxPlayer(0);
             responseData.addPlayer("made by", UUID.randomUUID());
             responseData.addPlayer("NonSwag", UUID.randomUUID());
             responseData.addPlayer("Verdox", UUID.randomUUID());
             responseData.setDescription(getVersion());
         });
-    }
-
-    public WorldManager getWorldManager() {
-        return worldManager;
-    }
-
-    public MinecraftServer getMinecraftServer() {
-        return minecraftServer;
     }
 }

@@ -1,4 +1,4 @@
-package net.backflip.server.api.plugin;
+package net.backflip.server.api.extension;
 
 import javax.annotation.meta.TypeQualifier;
 import java.lang.annotation.*;
