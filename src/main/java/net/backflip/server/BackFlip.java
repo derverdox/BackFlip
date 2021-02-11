@@ -3,6 +3,7 @@ package net.backflip.server;
 import net.backflip.server.annotations.*;
 import net.backflip.server.api.plugin.*;
 import net.backflip.server.enumerations.Month;
+import net.backflip.server.world.WorldManager;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.extras.optifine.OptifineSupport;
@@ -49,19 +50,42 @@ public class BackFlip {
     private static final String version = "BackFlip v0.1";
 
     @Nonnull
+    private static BackFlip instance;
+
+    @Nonnull
+    public static BackFlip getInstance() {
+        return instance;
+    }
+
+    @Nonnull
     public static String getVersion() {
         return version;
     }
 
     @Inject
     public static void main(String[] args) {
+        BackFlip backFlip = new BackFlip(true,true);
+        backFlip.startServer();
+    }
 
-        MinecraftServer minecraftServer = MinecraftServer.init();
-        MinecraftServer.setBrandName(getVersion());
-        MojangAuth.init();
-        OptifineSupport.enable();
+    private final MinecraftServer minecraftServer;
+    private final boolean enableMojangAuth;
+    private final boolean enableOptifineSupport;
+    private final WorldManager worldManager;
 
-        // TODO: Properties File generieren bzw auslesen? nope json file <3 (org.json)
+    protected BackFlip(boolean enableMojangAuth, boolean enableOptifineSupport){
+        this.minecraftServer = MinecraftServer.init();
+        this.enableMojangAuth = enableMojangAuth;
+        this.enableOptifineSupport = enableOptifineSupport;
+        this.worldManager = new WorldManager(this);
+    }
+
+    void startServer(){
+
+        if(enableMojangAuth)
+            MojangAuth.init();
+        if(enableOptifineSupport)
+            OptifineSupport.enable();
 
         minecraftServer.start("localhost", 25565, (playerConnection, responseData) -> {
             responseData.setMaxPlayer(0);
@@ -72,14 +96,11 @@ public class BackFlip {
         });
     }
 
-    private final MinecraftServer minecraftServer;
-    private final boolean enableMojangAuth;
-    private final boolean enableOptifineSupport;
-
-    protected BackFlip(MinecraftServer minecra, MinecraftServer minecraftServer1, boolean enableMojangAuth, boolean enableOptifineSupportft
-        Server){
-
-       , boolean enableMojangAuth, boolean enableOptifineSupport this.minecraftServer = minecraftServer;
+    public WorldManager getWorldManager() {
+        return worldManager;
     }
 
+    public MinecraftServer getMinecraftServer() {
+        return minecraftServer;
+    }
 }

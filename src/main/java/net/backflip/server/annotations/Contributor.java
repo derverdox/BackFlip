@@ -1,5 +1,7 @@
 package net.backflip.server.annotations;
 
+import net.backflip.server.enumerations.Month;
+
 import javax.annotation.Nonnull;
 import javax.annotation.meta.TypeQualifier;
 import java.lang.annotation.Documented;
@@ -33,7 +35,7 @@ public @interface Contributor {
     Birthday date
      */
 
-    @Nonnull Date birthday() default @Date(day = 0, month = 0, year = 0);
+    @Nonnull Date birthday() default @Date(day = 0, month = Month.JANUARY, year = 0);
 
     /*
     Contact
