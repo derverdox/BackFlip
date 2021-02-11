@@ -1,14 +1,35 @@
 package net.backflip.server;
 
-import net.backflip.server.api.player.PlayerAudience;
+import net.backflip.server.annotations.*;
+import net.backflip.server.api.plugin.*;
+import net.backflip.server.enumerations.Month;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.entity.Player;
 import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.extras.optifine.OptifineSupport;
 
 import javax.annotation.Nonnull;
 import java.util.UUID;
 
+@Extension(name = "BackFlip",
+        authors = @Contributors(contributors = {
+                @Contributor(firstname = "Lukas",
+                        lastname = "Jonsson",
+                        pseudonym = "Verdox"),
+                @Contributor(firstname = "David",
+                        lastname = "Kirschner",
+                        pseudonym = "NonSwag",
+                        age = 17,
+                        birthday = @Date(day = 17, month = Month.SEPTEMBER, year = 2003))
+        }),
+        links = @Links(download = @URL(url = ""),
+                github = @URL(url = ""),
+                gitlab = @URL(url = ""),
+                source = @URL(url = ""),
+                website = @URL(url = "")
+        ),
+        credits = @Credits(),
+        description = "default backflip extension",
+        version = "0.1")
 public class BackFlip {
 
     /*
@@ -26,7 +47,12 @@ public class BackFlip {
      » Eigenes WorldManager System (Chunks laden ; Entladen ; Ist sowieso Performant weil Minestom nur die Frage ist wann :D-> Minestom Events)
      » Eigenes Event System? Oder lieber das von Minestom erweitern (TNLEventAPI)
      » Für Commands auch das Minestom Command System (TNLCommandAPI)
-     » Eigene Plugin Schnittstelle? Oder lieber das Minestom Erweiterungssystem nutzen? (Vermutlich eigene damit die User eher mit unserer API arbeiten)
+     ----------
+     » Eigene Plugin Schnittstelle? Oder lieber das Minestom Erweiterungssystem nutzen? (jep eigene aber mit annotations und nicht sowas wie extends JavaPlugin)
+     » @Extension(String name, String version, String website, String description) -> für die infos im extension manager
+     » @Inject -> zum kennzeichnen der main method -> throws InjectException
+     » "backflip-extension.json" zum registrieren der main class -> { "main": "net.example.server.Extension" }
+     » hatte langeweile schau dir mal die plugin annotations an :D
      ----------
      » Vanilla kram reimplementieren
      */
@@ -39,6 +65,7 @@ public class BackFlip {
         return version;
     }
 
+    @Inject
     public static void main(String[] args) {
 
         MinecraftServer minecraftServer = MinecraftServer.init();
