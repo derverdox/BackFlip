@@ -4,12 +4,12 @@ import net.kyori.adventure.text.Component;
 
 import javax.annotation.Nonnull;
 
-public class TextComponent {
+public class ChatComponent {
 
     @Nonnull private final LanguageKey languageKey;
     @Nonnull private final Component component;
 
-    public TextComponent(@Nonnull LanguageKey languageKey, @Nonnull Component component) {
+    public ChatComponent(@Nonnull LanguageKey languageKey, @Nonnull Component component) {
         this.languageKey = languageKey;
         this.component = component;
     }
