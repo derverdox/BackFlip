@@ -40,11 +40,11 @@ public @interface Extension {
     The authors of the extension.
      */
 
-    @Nonnull Contributors authors() default @Contributors;
+    @Nonnull Contributors contributors() default @Contributors;
 
     /*
     Some credit information
      */
 
-    @Nonnull Credits credits() default @Credits;
+    @Nonnull Links credits() default @Links;
 }

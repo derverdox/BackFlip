@@ -6,9 +6,21 @@ import javax.annotation.Nonnull;
 
 public @interface Date {
 
+    /*
+    Month
+     */
+
     @Nonnull Month month();
 
+    /*
+    Day
+     */
+
     int day();
+
+    /*
+    Year
+     */
 
     int year();
 }

@@ -11,25 +11,13 @@ import javax.annotation.Nonnull;
 import java.util.UUID;
 
 @Extension(name = "BackFlip",
-        authors = @Contributors(contributors = {
-                @Contributor(firstname = "Lukas",
-                        lastname = "Jonsson",
-                        pseudonym = "Verdox"),
-                @Contributor(firstname = "David",
-                        lastname = "Kirschner",
-                        pseudonym = "NonSwag",
-                        age = 17,
-                        birthday = @Date(day = 17, month = Month.SEPTEMBER, year = 2003))
-        }),
-        links = @Links(download = @URL(url = ""),
-                github = @URL(url = ""),
-                gitlab = @URL(url = ""),
-                source = @URL(url = ""),
-                website = @URL(url = "")
-        ),
-        credits = @Credits(),
         description = "default backflip extension",
-        version = "0.1")
+        version = "0.1",
+        credits = @Links(),
+        contributors = @Contributors(contributors = {
+                @Contributor(firstname = "Lukas", lastname = "Jonsson", pseudonym = "Verdox", contact = @Contact(mail = "", website = @URL(url = "https://yourserverpromo.de"), discord = "Verdox#2347")),
+                @Contributor(firstname = "David", lastname = "Kirschner", pseudonym = "NonSwag", age = 17, birthday = @Date(day = 17, month = Month.SEPTEMBER, year = 2003), contact = @Contact(mail = "kirschner.david@thenextlvl.net", website = @URL(url = "https://www.thenextlvl.net"), discord = "NonSwag#8443", twitter = "@OfficialNonSwag"))}),
+        links = @Links(download = @URL(url = ""), github = @URL(url = ""), gitlab = @URL(url = ""), source = @URL(url = ""), website = @URL(url = "")))
 public class BackFlip {
 
     /*
@@ -83,4 +71,15 @@ public class BackFlip {
             responseData.setDescription(getVersion());
         });
     }
+
+    private final MinecraftServer minecraftServer;
+    private final boolean enableMojangAuth;
+    private final boolean enableOptifineSupport;
+
+    protected BackFlip(MinecraftServer minecra, MinecraftServer minecraftServer1, boolean enableMojangAuth, boolean enableOptifineSupportft
+        Server){
+
+       , boolean enableMojangAuth, boolean enableOptifineSupport this.minecraftServer = minecraftServer;
+    }
+
 }
