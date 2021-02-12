@@ -71,42 +71,44 @@ public class EntitySaveStorage {
             return null;
         }
         try{
-            int entityID = serializableData.getOrDefault("entityType",-1);
+            Integer entityID = serializableData.getOrDefault("entityType",-1);
 
-            if(entityID == -1)
+            if(entityID == null)
                 throw new RuntimeException("Error while restoring EntityType.. skipping");
 
-            double posX = serializableData.getOrDefault("entity_pos_x",0);
-            double posY = serializableData.getOrDefault("entity_pos_y",42);
-            double posZ = serializableData.getOrDefault("entity_pos_z",0);
+            Double posX = serializableData.getOrDefault("entity_pos_x",0d);
+            Double posY = serializableData.getOrDefault("entity_pos_y",42d);
+            Double posZ = serializableData.getOrDefault("entity_pos_z",0d);
 
-            double bBox_width = serializableData.getOrDefault("bBox_width",-1);
-            double bBox_height = serializableData.getOrDefault("bBox_height",-1);
-            double bBox_depth = serializableData.getOrDefault("bBox_depth",-1);
+            Double bBox_width = serializableData.getOrDefault("bBox_width",-1d);
+            Double bBox_height = serializableData.getOrDefault("bBox_height",-1d);
+            Double bBox_depth = serializableData.getOrDefault("bBox_depth",-1d);
 
-            if(bBox_width == -1 || bBox_depth == -1 || bBox_depth == -1)
+            if(bBox_width.doubleValue() == -1 || bBox_depth.doubleValue() == -1 || bBox_depth.doubleValue() == -1)
                 throw new RuntimeException("Error while restoring BoundingBox for entity.. skipping");
 
             RestoreEntityFromDiskEvent restoreEntityFromDiskEvent = new RestoreEntityFromDiskEvent(instance,serializableData);
 
             MinecraftServer.getGlobalEventHandler().callEvent(RestoreEntityFromDiskEvent.class,restoreEntityFromDiskEvent);
 
-            EntityCreature entityCreature;
+            EntityCreature entityCreature = null;
 
             if(restoreEntityFromDiskEvent.getSupplier() != null)
                 entityCreature = restoreEntityFromDiskEvent.getSupplier().get();
-            else {
+
+            if(entityCreature == null) {
                 Position position = new Position(posX,posY,posZ);
-                entityCreature = new EntityCreatureImpl(EntityType.fromId(entityID),position,bBox_width,bBox_height,bBox_depth);
+                entityCreature = new EntityCreatureImpl(EntityType.fromId(entityID), position, bBox_width, bBox_height, bBox_depth);
             }
             entityCreature.setData(serializableData);
 
             LOGGER.debug("Entity restored");
-            entityCreature.spawn();
+            entityCreature.setInstance(instance);
             return entityCreature;
         }
         catch (Exception e){
             LOGGER.error("Error initializing entity.. Skipping ("+e.getMessage()+")");
+            e.printStackTrace();
             return null;
         }
     }
@@ -123,10 +125,10 @@ public class EntitySaveStorage {
 
             Set<EntityCreature> set = new HashSet<>();
 
-            Files.walk(Path.of(storage.getLocation()),1)
+            Files.walk(Path.of(storage.getLocation()),3)
                     .skip(1)
-                    .parallel()
                     .forEach(path -> {
+                        System.out.println(path);
                 String fileName = path.toFile().getName();
                 if(!fileName.contains(".dat"))
                     return;
@@ -163,5 +165,9 @@ public class EntitySaveStorage {
 
     public static String createFolderName(Instance instance, int chunkX, int chunkZ){
         return instance.getStorageLocation().getLocation()+"/entities/"+RegionFile.Companion.createFileName(chunkX,chunkZ);
+    }
+
+    public void saveCachedData(){
+        this.storage.saveAndRemoveCachedData("entities");
     }
 }

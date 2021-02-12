@@ -1,6 +1,6 @@
 package net.backflip.server.commands;
 
-import net.backflip.server.world.entity.EntityLoader;
+import net.backflip.server.world.World;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.Arguments;
@@ -14,12 +14,11 @@ public class SaveAllCommand extends Command {
     }
 
     private void execute(CommandSender player, Arguments arguments) {
-        MinecraftServer.getStorageManager().getLocation("entities").saveCachedData();
         MinecraftServer.getInstanceManager().getInstances().forEach(i -> {
-            i.saveChunksToStorage(() -> System.out.println("Saved instance "+i));
-            i.getChunks().forEach(chunk -> {
-                new EntityLoader(i).saveChunkEntities(chunk,null);
-            });
+            if(!(i instanceof World))
+                return;
+            World world = (World) i;
+            world.saveWorld();
         });
     }
 }

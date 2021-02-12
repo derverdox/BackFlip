@@ -110,18 +110,11 @@ public class BackFlip {
             VelocityProxy.enable(getSettings().VELOCITY_SECRET.getValue());
         }
         Instance instance = worldManager.loadOrCreateWorld("testWelt", DimensionType.OVERWORLD);
-        InstanceContainer instanceContainer = MinecraftServer.getInstanceManager().createInstanceContainer();
-        instanceContainer.setChunkGenerator(new WorldGenerator());
-        instanceContainer.enableAutoChunkLoad(true);
+
         ConnectionManager connectionManager = MinecraftServer.getConnectionManager();
         connectionManager.addPlayerInitialization(player -> {
             player.addEventCallback(PlayerLoginEvent.class, event -> event.setSpawningInstance(instance));
             player.addEventCallback(PlayerSpawnEvent.class, event -> player.teleport(new Position(0, 45, 0)));
-            player.setGameMode(GameMode.CREATIVE);
-        });
-        MinecraftServer.getGlobalEventHandler().addEventCallback(PlayerLoginEvent.class,playerLoginEvent -> {
-            playerLoginEvent.getPlayer().setFlying(true);
-            playerLoginEvent.getPlayer().setFlyingSpeed(1);
         });
 
         MinecraftServer.getCommandManager().register(new StopCommand());

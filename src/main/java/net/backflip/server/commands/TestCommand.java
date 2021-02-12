@@ -13,6 +13,8 @@ public class TestCommand extends Command {
                 return;
             Player player = (Player) commandSender;
             EntityCow entityCow = new EntityCow(player.getPosition());
+            entityCow.setInstance(player.getInstance());
+            entityCow.addViewer(player);
             entityCow.spawn();
         });
     }

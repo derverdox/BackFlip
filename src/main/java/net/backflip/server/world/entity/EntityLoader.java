@@ -1,5 +1,6 @@
 package net.backflip.server.world.entity;
 
+import net.backflip.server.world.World;
 import net.backflip.server.world.entity.callback.EntityCallback;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.EntityCreature;
@@ -17,12 +18,12 @@ public class EntityLoader {
     private ConcurrentHashMap<String, EntitySaveStorage> alreadyLoaded = new ConcurrentHashMap<>();
     private Instance instance;
 
-    public EntityLoader(Instance instance){
-        this.instance = instance;
+    public EntityLoader(World world){
+        this.instance = world;
     }
 
     public boolean loadChunkEntities(int chunkX, int chunkZ, EntityCallback callback){
-        Set<EntityCreature> set = loadEntityStorage(instance,chunkX,chunkZ,callback);
+        Set<EntityCreature> set = loadEntityStorage(chunkX,chunkZ,callback);
         return set != null && !set.isEmpty();
     }
 
@@ -32,7 +33,7 @@ public class EntityLoader {
             int chunkZ = chunk.getChunkZ();
             EntitySaveStorage entitySaveStorage;
             synchronized (alreadyLoaded){
-                entitySaveStorage = getEntityStorage(instance, chunkX, chunkZ);
+                entitySaveStorage = getEntityStorage(chunkX, chunkZ);
                 instance.getChunkEntities(chunk).forEach(entity -> {
                     if(!(entity instanceof EntityCreature))
                         return;
@@ -45,8 +46,8 @@ public class EntityLoader {
         }).schedule();
     }
 
-    private Set<EntityCreature> loadEntityStorage(Instance instance, int chunkX, int chunkZ, EntityCallback callback){
-        EntitySaveStorage entitySaveStorage = getEntityStorage(instance,chunkX,chunkZ);
+    private Set<EntityCreature> loadEntityStorage(int chunkX, int chunkZ, EntityCallback callback){
+        EntitySaveStorage entitySaveStorage = getEntityStorage(chunkX,chunkZ);
         if(entitySaveStorage == null)
             return null;
 
@@ -58,7 +59,7 @@ public class EntityLoader {
         return set;
     }
 
-    private EntitySaveStorage getEntityStorage(Instance instance, int chunkX, int chunkZ){
+    public EntitySaveStorage getEntityStorage(int chunkX, int chunkZ){
         return alreadyLoaded.computeIfAbsent(EntitySaveStorage.createFolderName(instance,chunkX,chunkZ),
                 folderName -> new EntitySaveStorage(instance,chunkX,chunkZ));
     }

@@ -5,7 +5,7 @@ import net.minestom.server.command.builder.Command;
 
 public class StopCommand extends Command {
     public StopCommand() {
-        super("stop", "stop");
+        super("stop", "s");
         setCondition((commandSender, s) -> true);
         // Default Command Executor
         setDefaultExecutor((commandSender, arguments) -> {
