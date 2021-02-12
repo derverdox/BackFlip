@@ -4,18 +4,24 @@ import net.backflip.server.annotations.*;
 import net.backflip.server.api.extension.*;
 import net.backflip.server.api.logger.Logger;
 import net.backflip.server.api.settings.Settings;
+import net.backflip.server.commands.SaveAllCommand;
+import net.backflip.server.commands.StopCommand;
+import net.backflip.server.commands.TestCommand;
 import net.backflip.server.enumerations.Month;
 import net.backflip.server.world.WorldGenerator;
 import net.backflip.server.world.WorldManager;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.entity.GameMode;
 import net.minestom.server.event.player.PlayerLoginEvent;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.extras.optifine.OptifineSupport;
 import net.minestom.server.extras.velocity.VelocityProxy;
+import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.network.ConnectionManager;
 import net.minestom.server.utils.Position;
+import net.minestom.server.world.DimensionType;
 
 import javax.annotation.Nonnull;
 import java.util.UUID;
@@ -106,14 +112,24 @@ public class BackFlip {
         if (getSettings().VELOCITY_SUPPORT.getValue()) {
             VelocityProxy.enable(getSettings().VELOCITY_SECRET.getValue());
         }
-        InstanceContainer instanceContainer = MinecraftServer.getInstanceManager().createInstanceContainer();
-        instanceContainer.setChunkGenerator(new WorldGenerator());
-        instanceContainer.enableAutoChunkLoad(true);
+        Instance instance = worldManager.loadOrCreateWorld("testWelt", DimensionType.OVERWORLD);
+        //InstanceContainer instanceContainer = MinecraftServer.getInstanceManager().createInstanceContainer();
+        //instanceContainer.setChunkGenerator(new WorldGenerator());
+        //instanceContainer.enableAutoChunkLoad(true);
         ConnectionManager connectionManager = MinecraftServer.getConnectionManager();
         connectionManager.addPlayerInitialization(player -> {
-            player.addEventCallback(PlayerLoginEvent.class, event -> event.setSpawningInstance(instanceContainer));
+            player.addEventCallback(PlayerLoginEvent.class, event -> event.setSpawningInstance(instance));
             player.addEventCallback(PlayerSpawnEvent.class, event -> player.teleport(new Position(0, 45, 0)));
+            player.setGameMode(GameMode.CREATIVE);
         });
+        MinecraftServer.getGlobalEventHandler().addEventCallback(PlayerLoginEvent.class,playerLoginEvent -> {
+            playerLoginEvent.getPlayer().setFlying(true);
+            playerLoginEvent.getPlayer().setFlyingSpeed(1);
+        });
+
+        MinecraftServer.getCommandManager().register(new StopCommand());
+        MinecraftServer.getCommandManager().register(new SaveAllCommand());
+        MinecraftServer.getCommandManager().register(new TestCommand());
     }
 
     protected void startServer() {
