@@ -26,6 +26,8 @@ public class World extends InstanceContainer {
     private final AnvilChunkLoader anvilChunkLoader;
     private String worldName;
 
+    //TODO: Einheitliche UUID für jede Instanz! -> UUID irgendwo abspeichern und neu reinladen
+
     public World(String worldName, @NotNull DimensionType dimensionType) {
         super(UUID.randomUUID(), dimensionType, MinecraftServer.getStorageManager().getLocation(worldName + "/data", new StorageOptions(), new FileSystemStorage()));
         this.worldName = worldName;

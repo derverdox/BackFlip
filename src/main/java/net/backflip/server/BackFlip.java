@@ -98,6 +98,7 @@ public class BackFlip {
     }
 
     protected BackFlip() {
+        Logger.info("Starting Backflip Server "+getVersion());
         this.server = MinecraftServer.init();
         this.worldManager = new WorldManager(getInstance(), 6);
         if (getSettings().MOJANG_AUTHENTICATION.getValue()) {
@@ -109,6 +110,7 @@ public class BackFlip {
         if (getSettings().VELOCITY_SUPPORT.getValue()) {
             VelocityProxy.enable(getSettings().VELOCITY_SECRET.getValue());
         }
+
         Instance instance = worldManager.loadOrCreateWorld("testWelt", DimensionType.OVERWORLD);
 
         ConnectionManager connectionManager = MinecraftServer.getConnectionManager();
@@ -158,6 +160,7 @@ public class BackFlip {
             responseData.addPlayer("Verdox", UUID.randomUUID());
             responseData.setDescription(getVersion());
         });
+
         Logger.info("Started server on '" + getSettings().HOST_ADDRESS.getValue() + ":" + getSettings().PORT.getValue() + "'");
     }
 }
