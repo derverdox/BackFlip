@@ -128,7 +128,6 @@ public class EntitySaveStorage {
             Files.walk(Path.of(storage.getLocation()),3)
                     .skip(1)
                     .forEach(path -> {
-                        System.out.println(path);
                 String fileName = path.toFile().getName();
                 if(!fileName.contains(".dat"))
                     return;

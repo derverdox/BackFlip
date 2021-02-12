@@ -15,15 +15,12 @@ import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.storage.StorageOptions;
 import net.minestom.server.world.DimensionType;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.backflip.server.api.logger.Logger;
 
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class World extends InstanceContainer {
-    public static Logger LOGGER = LoggerFactory.getLogger(WorldManager.class);
-
     private final ConcurrentHashMap<Chunk, Long> chunkLastChange = new ConcurrentHashMap<>();
     private final EntityLoader entityLoader;
     private final AnvilChunkLoader anvilChunkLoader;
@@ -44,23 +41,15 @@ public class World extends InstanceContainer {
         createEventCallbacks();
     }
 
-    private void preLoadChunks(){
-        for(int x = 0; x < 2; x++){
-            for(int z = 0; z < 2; z++){
-                LOGGER.debug("Attempting to preLoad Chunk at "+x+", "+z);
-                this.loadChunk(x,z);
-            }
-        }
-    }
-
     public void saveWorld(){
-        LOGGER.info("Saving world "+worldName+" ...");
-        this.saveInstance(() -> LOGGER.info("World "+worldName+" chunks saved"));
+        Logger.info("Saving world "+worldName+" ...");
+        this.saveInstance(() -> Logger.info("World "+worldName+" chunks saved"));
         this.getChunks().forEach(chunk -> {
             this.entityLoader.getEntityStorage(chunk.getChunkX(),chunk.getChunkZ()).saveCachedData();
             entityLoader.saveChunkEntities(chunk, null);
         });
-        this.saveInstance(() -> LOGGER.info("World "+worldName+" entities saved"));
+
+        this.saveInstance(() -> Logger.info("World "+worldName+" entities saved"));
     }
 
     private void createEventCallbacks(){
