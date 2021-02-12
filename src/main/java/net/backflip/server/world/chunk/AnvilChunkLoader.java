@@ -29,6 +29,8 @@ import java.io.RandomAccessFile;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+//TODO: Chunk File Kapazität? -> Nich dass wir mit irgend nem NBT Bullshit vollgemüllt werden ^^
+
 public class AnvilChunkLoader implements IChunkLoader {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(AnvilChunkLoader.class);

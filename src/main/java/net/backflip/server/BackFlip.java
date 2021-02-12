@@ -116,7 +116,8 @@ public class BackFlip {
         ConnectionManager connectionManager = MinecraftServer.getConnectionManager();
         connectionManager.addPlayerInitialization(player -> {
             player.addEventCallback(PlayerLoginEvent.class, event -> event.setSpawningInstance(instance));
-            player.addEventCallback(PlayerSpawnEvent.class, event -> player.teleport(new Position(0, 45, 0)));
+            player.addEventCallback(PlayerSpawnEvent.class, event -> player.teleport(new Position(0, 140, 0)));
+            player.addEventCallback(PlayerSpawnEvent.class,playerSpawnEvent -> playerSpawnEvent.getPlayer().setGameMode(GameMode.CREATIVE));
         });
 
         MinecraftServer.getCommandManager().register(new StopCommand());
