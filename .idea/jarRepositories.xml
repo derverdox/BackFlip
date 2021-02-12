@@ -31,5 +31,10 @@
       <option name="name" value="JBoss Community repository" />
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="MineSchem" />
+      <option name="name" value="MineSchem" />
+      <option name="url" value="https://repo.repsy.io/mvn/sejtam10/minestom" />
+    </remote-repository>
   </component>
 </project>

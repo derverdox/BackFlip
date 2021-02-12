@@ -62,13 +62,10 @@ public class Settings {
                         if (setting.getKey().equals(key)) {
                             if (setting.getValue() instanceof String) {
                                 ((Setting<String>) setting).setValue(jsonObject.get(key).getAsString());
-                                Logger.info("Loaded setting value '" + setting.getValue() + "' from key '" + setting.getKey() + "'");
                             } else if (setting.getValue() instanceof Boolean) {
                                 ((Setting<Boolean>) setting).setValue(jsonObject.get(key).getAsBoolean());
-                                Logger.info("Loaded setting value '" + setting.getValue() + "' from key '" + setting.getKey() + "'");
                             } else if (setting.getValue() instanceof Integer) {
                                 ((Setting<Integer>) setting).setValue(jsonObject.get(key).getAsInt());
-                                Logger.info("Loaded setting value '" + setting.getValue() + "' from key '" + setting.getKey() + "'");
                             } else {
                                 Logger.warn("Unset Setting Type '" + setting.getValue().getClass().getSimpleName() + "'");
                             }

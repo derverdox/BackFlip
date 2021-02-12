@@ -1,4 +1,4 @@
-package net.backflip.server.world;
+package net.backflip.server.world.generator;
 
 import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.ChunkGenerator;
