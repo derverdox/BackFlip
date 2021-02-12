@@ -3,9 +3,10 @@ package net.backflip.server;
 import net.backflip.server.annotations.*;
 import net.backflip.server.api.extension.*;
 import net.backflip.server.api.logger.Logger;
+import net.backflip.server.api.settings.Setting;
 import net.backflip.server.api.settings.Settings;
 import net.backflip.server.enumerations.Month;
-import net.backflip.server.world.WorldGenerator;
+import net.backflip.server.world.generator.WorldGenerator;
 import net.backflip.server.world.WorldManager;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.player.PlayerLoginEvent;
@@ -18,6 +19,9 @@ import net.minestom.server.network.ConnectionManager;
 import net.minestom.server.utils.Position;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @Extension(name = "BackFlip",
@@ -58,10 +62,6 @@ public class BackFlip {
     @Nonnull
     private static final BackFlip instance = new BackFlip();
 
-    static {
-        getInstance().startServer();
-    }
-
     @Nonnull
     public static BackFlip getInstance() {
         return instance;
@@ -91,9 +91,6 @@ public class BackFlip {
         return settings;
     }
 
-    public static void main(String[] args) {
-    }
-
     protected BackFlip() {
         this.server = MinecraftServer.init();
         this.worldManager = new WorldManager(getInstance(), 6);
@@ -116,7 +113,35 @@ public class BackFlip {
         });
     }
 
-    protected void startServer() {
+    protected void start(String... args) {
+        for (String arg : args) {
+            String[] split = arg.split(":");
+            if (split.length >= 2) {
+                String key = split[0].substring(1);
+                List<String> values = new ArrayList<>(Arrays.asList(split));
+                values.remove(0);
+                String value = String.join(":", values);
+                for (Setting<?> setting : Setting.getList()) {
+                    if (key.equalsIgnoreCase(setting.getKey())) {
+                        try {
+                            if (setting.getValue() instanceof String) {
+                                ((Setting<String>) setting).setValue(value);
+                                Logger.info("Loaded setting '" + key + "' with value '" + value + "'");
+                            } else if (setting.getValue() instanceof Boolean) {
+                                ((Setting<Boolean>) setting).setValue(Boolean.parseBoolean(value));
+                                Logger.info("Loaded setting '" + key + "' with value '" + value + "'");
+                            } else if (setting.getValue() instanceof Integer) {
+                                ((Setting<Integer>) setting).setValue(Integer.parseInt(value));
+                                Logger.info("Loaded setting '" + key + "' with value '" + value + "'");
+                            } else {
+                                Logger.warn("Unset Setting Type '" + setting.getValue().getClass().getSimpleName() + "'");
+                            }
+                        } catch (NumberFormatException ignored) {
+                        }
+                    }
+                }
+            }
+        }
         getServer().start(getSettings().HOST_ADDRESS.getValue(), getSettings().PORT.getValue(), (playerConnection, responseData) -> {
             responseData.setMaxPlayer(getSettings().MAX_PLAYER_COUNT.getValue());
             responseData.addPlayer("made by", UUID.randomUUID());
