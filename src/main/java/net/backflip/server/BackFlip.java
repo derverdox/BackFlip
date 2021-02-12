@@ -110,9 +110,9 @@ public class BackFlip {
             VelocityProxy.enable(getSettings().VELOCITY_SECRET.getValue());
         }
         Instance instance = worldManager.loadOrCreateWorld("testWelt", DimensionType.OVERWORLD);
-        //InstanceContainer instanceContainer = MinecraftServer.getInstanceManager().createInstanceContainer();
-        //instanceContainer.setChunkGenerator(new WorldGenerator());
-        //instanceContainer.enableAutoChunkLoad(true);
+        InstanceContainer instanceContainer = MinecraftServer.getInstanceManager().createInstanceContainer();
+        instanceContainer.setChunkGenerator(new WorldGenerator());
+        instanceContainer.enableAutoChunkLoad(true);
         ConnectionManager connectionManager = MinecraftServer.getConnectionManager();
         connectionManager.addPlayerInitialization(player -> {
             player.addEventCallback(PlayerLoginEvent.class, event -> event.setSpawningInstance(instance));

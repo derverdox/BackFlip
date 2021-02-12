@@ -4,6 +4,7 @@ import net.backflip.server.BackFlip;
 import net.backflip.server.world.chunk.AnvilChunkLoader;
 import net.backflip.server.world.chunk.FileSystemStorage;
 import net.backflip.server.world.entity.EntityLoader;
+import net.backflip.server.world.generator.WorldGenerator;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.data.SerializableDataImpl;
 import net.minestom.server.event.instance.InstanceChunkLoadEvent;
