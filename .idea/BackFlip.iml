@@ -18,6 +18,14 @@
     </content>
     <orderEntry type="jdk" jdkName="11" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.reflections:reflections:0.9.12" level="project" />
+    <orderEntry type="library" name="Maven: org.javassist:javassist:3.26.0-GA" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains:annotations:19.0.0" level="project" />
+    <orderEntry type="library" name="Maven: net.kyori:adventure-api:4.4.0" level="project" />
+    <orderEntry type="library" name="Maven: net.kyori:adventure-key:4.4.0" level="project" />
+    <orderEntry type="library" name="Maven: net.kyori:examination-api:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: net.kyori:examination-string:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.checkerframework:checker-qual:3.9.0" level="project" />
     <orderEntry type="library" name="Maven: com.github.Minestom:Minestom:04c792c302" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-text:1.9" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.11" level="project" />
@@ -108,14 +116,5 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.arquillian.spacelift:arquillian-spacelift:1.0.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.arquillian.spacelift:arquillian-spacelift-api:1.0.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.commons:commons-compress:1.8.1" level="project" />
-    <orderEntry type="library" name="Maven: org.reflections:reflections:0.9.12" level="project" />
-    <orderEntry type="library" name="Maven: org.javassist:javassist:3.26.0-GA" level="project" />
-    <orderEntry type="library" name="Maven: org.json:json:20190722" level="project" />
-    <orderEntry type="library" name="Maven: net.kyori:adventure-api:4.5.0" level="project" />
-    <orderEntry type="library" name="Maven: net.kyori:adventure-key:4.5.0" level="project" />
-    <orderEntry type="library" name="Maven: net.kyori:examination-api:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: net.kyori:examination-string:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: org.checkerframework:checker-qual:3.10.0" level="project" />
-    <orderEntry type="library" name="Maven: org.jetbrains:annotations:20.1.0" level="project" />
   </component>
 </module>

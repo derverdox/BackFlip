@@ -1,81 +1,89 @@
 package net.backflip.server.api.settings;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.backflip.server.api.logger.Logger;
 
 import javax.annotation.Nonnull;
-import java.io.File;
-import java.io.IOException;
-import java.net.InetSocketAddress;
+import java.io.*;
 
 public class Settings {
 
     @Nonnull private static final Settings instance = new Settings();
 
     @Nonnull private final File file = new File("settings.json");
-    @Nonnull private final Setting<InetSocketAddress> address = new Setting<>(null);
-    @Nonnull private final Setting<String> velocitySecret = new Setting<>(null);
-    @Nonnull private final Setting<Boolean> autoUpdater = new Setting<>(null);
-    @Nonnull private final Setting<Boolean> tabCompleter = new Setting<>(null);
-    @Nonnull private final Setting<Boolean> chatCompleter = new Setting<>(null);
-    @Nonnull private final Setting<Boolean> forgeSupport = new Setting<>(null);
-    @Nonnull private final Setting<Boolean> optifineSupport = new Setting<>(null);
-    @Nonnull private final Setting<Boolean> velocitySupport = new Setting<>(null);
+    @Nonnull public final Setting<String> VELOCITY_SECRET = new Setting<>("velocity-secret", "secret");
+    @Nonnull public final Setting<String> HOST_ADDRESS = new Setting<>("host-address", "localhost");
+    @Nonnull public final Setting<Boolean> AUTO_UPDATER = new Setting<>("auto-updater", true);
+    @Nonnull public final Setting<Boolean> TAB_COMPLETER = new Setting<>("tab-completer", true);
+    @Nonnull public final Setting<Boolean> CHAT_COMPLETER = new Setting<>("chat-completer", true);
+    @Nonnull public final Setting<Boolean> MOJANG_AUTHENTICATION = new Setting<>("mojang-authentication", true);
+    @Nonnull public final Setting<Boolean> FORGE_SUPPORT = new Setting<>("forge-support", true);
+    @Nonnull public final Setting<Boolean> OPTIFINE_SUPPORT = new Setting<>("optifine-support", true);
+    @Nonnull public final Setting<Boolean> VELOCITY_SUPPORT = new Setting<>("velocity-support", false);
+    @Nonnull public final Setting<Integer> MAX_PLAYER_COUNT = new Setting<>("max-player-count", 100);
+    @Nonnull public final Setting<Integer> PORT = new Setting<>("port", 25565);
 
     protected Settings() {
         if (!file.exists()) {
             try {
                 if (file.createNewFile()) {
                     Logger.info("Generated '" + getFile().getName() + "' file at '" + getFile().getAbsolutePath() + "'");
+                } else {
+                    Logger.error("Couldn't generate file '" + getFile().getName() + "' at '" + getFile().getAbsolutePath() + "'");
+                    throw new FileNotFoundException("Couldn't generate file");
                 }
+                JsonObject jsonObject = new JsonObject();
+                for (Setting<?> setting : Setting.getList()) {
+                    if (setting.getValue() instanceof String) {
+                        jsonObject.addProperty(setting.getKey(), ((String) setting.getValue()));
+                    } else if (setting.getValue() instanceof Boolean) {
+                        jsonObject.addProperty(setting.getKey(), ((Boolean) setting.getValue()));
+                    } else if (setting.getValue() instanceof Integer) {
+                        jsonObject.addProperty(setting.getKey(), ((Integer) setting.getValue()));
+                    } else {
+                        Logger.warn("Unset Setting Type '" + setting.getValue().getClass().getSimpleName() + "'");
+                    }
+                }
+                BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+                writer.write(jsonObject.toString());
+                writer.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+        try {
+            JsonElement jsonElement = JsonParser.parseReader(new FileReader(file));
+            if (jsonElement.isJsonObject()) {
+                JsonObject jsonObject = jsonElement.getAsJsonObject();
+                for (String key : jsonObject.keySet()) {
+                    for (Setting<?> setting : Setting.getList()) {
+                        if (setting.getKey().equals(key)) {
+                            if (setting.getValue() instanceof String) {
+                                ((Setting<String>) setting).setValue(jsonObject.get(key).getAsString());
+                                Logger.info("Loaded setting value '" + setting.getValue() + "' from key '" + setting.getKey() + "'");
+                            } else if (setting.getValue() instanceof Boolean) {
+                                ((Setting<Boolean>) setting).setValue(jsonObject.get(key).getAsBoolean());
+                                Logger.info("Loaded setting value '" + setting.getValue() + "' from key '" + setting.getKey() + "'");
+                            } else if (setting.getValue() instanceof Integer) {
+                                ((Setting<Integer>) setting).setValue(jsonObject.get(key).getAsInt());
+                                Logger.info("Loaded setting value '" + setting.getValue() + "' from key '" + setting.getKey() + "'");
+                            } else {
+                                Logger.warn("Unset Setting Type '" + setting.getValue().getClass().getSimpleName() + "'");
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
     @Nonnull
     public File getFile() {
         return file;
-    }
-
-    @Nonnull
-    public Setting<InetSocketAddress> getAddress() {
-        return address;
-    }
-
-    @Nonnull
-    public Setting<String> getVelocitySecret() {
-        return velocitySecret;
-    }
-
-    @Nonnull
-    public Setting<Boolean> getAutoUpdater() {
-        return autoUpdater;
-    }
-
-    @Nonnull
-    public Setting<Boolean> getTabCompleter() {
-        return tabCompleter;
-    }
-
-    @Nonnull
-    public Setting<Boolean> getChatCompleter() {
-        return chatCompleter;
-    }
-
-    @Nonnull
-    public Setting<Boolean> getForgeSupport() {
-        return forgeSupport;
-    }
-
-    @Nonnull
-    public Setting<Boolean> getOptifineSupport() {
-        return optifineSupport;
-    }
-
-    @Nonnull
-    public Setting<Boolean> getVelocitySupport() {
-        return velocitySupport;
     }
 
     @Nonnull
