@@ -1,4 +1,4 @@
-package net.backflip.server.entity.exceptions;
+package net.backflip.server.api.entity.exceptions;
 
 public class EntityIDInvalidException extends RuntimeException {
     public EntityIDInvalidException(String message, Throwable cause) {

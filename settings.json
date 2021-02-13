@@ -1,0 +1,17 @@
+{
+  "velocity-secret":"secret",
+  "host-address":"localhost",
+  "auto-updater":true,
+  "tab-completer":true,
+  "chat-completer":true,
+  "mojang-authentication":true,
+  "forge-support":true,
+  "optifine-support":true,
+  "velocity-support":false,
+  "debug":true,
+  "join-message":true,
+  "quit-message":true,
+  "kick-message":true,
+  "max-player-count":100,
+  "port":25565
+}

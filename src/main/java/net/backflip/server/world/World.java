@@ -17,41 +17,60 @@ import net.minestom.server.world.DimensionType;
 import org.jetbrains.annotations.NotNull;
 import net.backflip.server.api.logger.Logger;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class World extends InstanceContainer {
-    private final ConcurrentHashMap<Chunk, Long> chunkLastChange = new ConcurrentHashMap<>();
-    private final EntityLoader entityLoader;
-    private final AnvilChunkLoader anvilChunkLoader;
-    private String worldName;
+
+    @Nonnull private final ConcurrentHashMap<Chunk, Long> chunkLastChange = new ConcurrentHashMap<>();
+    @Nonnull private final EntityLoader entityLoader;
+    @Nonnull private final AnvilChunkLoader anvilChunkLoader;
+    @Nonnull private final String name;
 
     //TODO: Einheitliche UUID für jede Instanz! -> UUID irgendwo abspeichern und neu reinladen
 
-    public World(String worldName, @NotNull DimensionType dimensionType) {
-        super(UUID.randomUUID(), dimensionType, MinecraftServer.getStorageManager().getLocation(worldName + "/data", new StorageOptions(), new FileSystemStorage()));
-        this.worldName = worldName;
+    public World(String name, @NotNull DimensionType dimensionType) {
+        super(UUID.randomUUID(), dimensionType, MinecraftServer.getStorageManager().getLocation(name + "/data", new StorageOptions(), new FileSystemStorage()));
+        this.name = name;
         this.entityLoader = new EntityLoader(this);
-        this.anvilChunkLoader = new AnvilChunkLoader(MinecraftServer.getStorageManager().getLocation(worldName + "/region", new StorageOptions(), new FileSystemStorage()), this);
-
+        this.anvilChunkLoader = new AnvilChunkLoader(MinecraftServer.getStorageManager().getLocation(getName() + "/region", new StorageOptions(), new FileSystemStorage()), this);
         this.enableAutoChunkLoad(true);
         this.setChunkGenerator(new WorldGenerator());
         this.setData(new SerializableDataImpl());
         this.setChunkLoader(anvilChunkLoader);
-
-        MinecraftServer.getSchedulerManager().buildShutdownTask(this::saveWorld).schedule();
+        MinecraftServer.getSchedulerManager().buildShutdownTask(this::save).schedule();
         createEventCallbacks();
     }
 
-    public void saveWorld(){
-        Logger.info("Saving world "+worldName+" ...");
-        this.saveInstance(() -> Logger.info("World "+worldName+" chunks saved"));
+    @Nonnull
+    public ConcurrentHashMap<Chunk, Long> getChunkLastChange() {
+        return chunkLastChange;
+    }
+
+    @Nonnull
+    public EntityLoader getEntityLoader() {
+        return entityLoader;
+    }
+
+    @Nonnull
+    public AnvilChunkLoader getAnvilChunkLoader() {
+        return anvilChunkLoader;
+    }
+
+    @Nonnull
+    public String getName() {
+        return name;
+    }
+
+    public void save() {
+        Logger.debug("<lime>Saving world<gray>: <gold>" + getName());
+        this.saveInstance(() -> Logger.debug("<lime>Saved world<gray>: <gold>" + getName()));
         this.getChunks().forEach(chunk -> {
-            this.entityLoader.getEntityStorage(chunk.getChunkX(),chunk.getChunkZ()).saveCachedData();
+            this.entityLoader.getEntityStorage(chunk.getChunkX(), chunk.getChunkZ()).saveCachedData();
             entityLoader.saveChunkEntities(chunk, null);
         });
-
-        this.saveInstance(() -> Logger.info("World "+worldName+" entities saved"));
+        this.saveInstance(() -> Logger.debug("<lime>Saved entities in world<gray>: <gold>" + getName()));
     }
 
     private void createEventCallbacks(){
@@ -74,13 +93,13 @@ public class World extends InstanceContainer {
         MinecraftServer.getGlobalEventHandler().addEventCallback(InstanceChunkUnloadEvent.class, instanceChunkUnloadEvent -> {
             Instance eventInstance = instanceChunkUnloadEvent.getInstance();
             Chunk chunk = eventInstance.getChunk(instanceChunkUnloadEvent.getChunkX(), instanceChunkUnloadEvent.getChunkZ());
-            // The Chunk has been changed since it was loaded
-            if(chunk == null)
-                return;
-            if(chunkLastChange.containsKey(chunk) && chunkLastChange.get(chunk) != chunk.getLastChangeTime())
-                eventInstance.saveChunkToStorage(chunk);
-            chunkLastChange.remove(chunk);
-            entityLoader.saveChunkEntities(chunk,null);
+            if (chunk != null) {
+                if (chunkLastChange.containsKey(chunk) && chunkLastChange.get(chunk) != chunk.getLastChangeTime()) {
+                    eventInstance.saveChunkToStorage(chunk);
+                }
+                chunkLastChange.remove(chunk);
+                entityLoader.saveChunkEntities(chunk, null);
+            }
         });
 
         MinecraftServer.getGlobalEventHandler().addEventCallback(InstanceChunkLoadEvent.class, instanceChunkLoadEvent -> {
@@ -92,9 +111,5 @@ public class World extends InstanceContainer {
             entityLoader.loadChunkEntities(chunk.getChunkX(),chunk.getChunkZ(),null);
         });
 
-    }
-
-    public EntityLoader getEntityLoader() {
-        return entityLoader;
     }
 }

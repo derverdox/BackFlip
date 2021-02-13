@@ -4,12 +4,10 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.builder.Command;
 
 public class StopCommand extends Command {
+
     public StopCommand() {
-        super("stop", "s");
+        super("stop");
         setCondition((commandSender, s) -> true);
-        // Default Command Executor
-        setDefaultExecutor((commandSender, arguments) -> {
-            MinecraftServer.stopCleanly();
-        });
+        setDefaultExecutor((commandSender, arguments) -> MinecraftServer.stopCleanly());
     }
 }

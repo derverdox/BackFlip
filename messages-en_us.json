@@ -1,0 +1,12 @@
+{
+  "no-permission":"§cYou have no Rights §8(§4%permission%§8)",
+  "command-exception":"§cAn error has occurred",
+  "unknown-command":"§cThe Command §8(§4%command%§8)§c doesn't exist",
+  "player-command":"§cThis is a Player command",
+  "kicked":"§cYou got kicked",
+  "banned":"§cYou got banned",
+  "first-join-message":"§6%player%§a joined the game §8(§7the first time§8)",
+  "join-message":"§6%player%§a joined the game",
+  "quit-message":"§4%player%§c left the game",
+  "kick-message":"§4%player%§c left the game §8(§7got kicked§8)"
+}

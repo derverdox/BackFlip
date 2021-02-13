@@ -1,4 +1,4 @@
-package net.backflip.server.entity.exceptions;
+package net.backflip.server.api.entity.exceptions;
 
 public class EntityIDNotUniqueException extends RuntimeException{
     public EntityIDNotUniqueException(String message, Throwable cause){

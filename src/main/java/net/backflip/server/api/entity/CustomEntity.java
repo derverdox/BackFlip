@@ -1,15 +1,12 @@
-package net.backflip.server.entity;
+package net.backflip.server.api.entity;
 
 import net.minestom.server.data.SerializableDataImpl;
 import net.minestom.server.entity.Entity;
 import net.minestom.server.entity.EntityCreature;
-import net.minestom.server.entity.type.animal.EntityCow;
 import net.minestom.server.event.entity.*;
 import net.minestom.server.event.player.PlayerEntityInteractEvent;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.utils.Position;
-
-import java.util.UUID;
 
 public abstract class CustomEntity {
 

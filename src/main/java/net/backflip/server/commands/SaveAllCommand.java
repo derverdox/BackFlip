@@ -18,7 +18,7 @@ public class SaveAllCommand extends Command {
             if(!(i instanceof World))
                 return;
             World world = (World) i;
-            world.saveWorld();
+            world.save();
         });
     }
 }

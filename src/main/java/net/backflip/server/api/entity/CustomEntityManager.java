@@ -1,8 +1,8 @@
-package net.backflip.server.entity;
+package net.backflip.server.api.entity;
 
 import net.backflip.server.BackFlip;
-import net.backflip.server.entity.exceptions.EntityIDInvalidException;
-import net.backflip.server.entity.exceptions.EntityIDNotUniqueException;
+import net.backflip.server.api.entity.exceptions.EntityIDInvalidException;
+import net.backflip.server.api.entity.exceptions.EntityIDNotUniqueException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

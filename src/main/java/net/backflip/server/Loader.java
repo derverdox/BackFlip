@@ -1,12 +1,9 @@
 package net.backflip.server;
 
-public class Loader {
+import net.backflip.server.api.message.Message;
+import net.backflip.server.api.settings.Settings;
 
-    /*
-     $port:25566
-     $host-address:localhost
-     $max-player-count:10
-     */
+public class Loader {
 
     public static void main(String[] args) {
         BackFlip.getInstance().start(args);

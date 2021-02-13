@@ -1,4 +1,4 @@
-package net.backflip.server.entity.exceptions;
+package net.backflip.server.api.entity.exceptions;
 
 public class EntityIDNotFoundException extends RuntimeException{
     public EntityIDNotFoundException(String message, Throwable cause){

@@ -1,6 +1,6 @@
 package net.backflip.server.world.entity;
 
-import net.backflip.server.entity.EntityCreatureImpl;
+import net.backflip.server.api.entity.EntityCreatureImpl;
 import net.backflip.server.world.chunk.FileSystemStorage;
 import net.backflip.server.world.entity.event.RestoreEntityFromDiskEvent;
 import net.minestom.server.MinecraftServer;

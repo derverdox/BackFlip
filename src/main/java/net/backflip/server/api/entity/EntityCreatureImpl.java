@@ -1,4 +1,4 @@
-package net.backflip.server.entity;
+package net.backflip.server.api.entity;
 
 import net.minestom.server.entity.EntityCreature;
 import net.minestom.server.entity.EntityType;
