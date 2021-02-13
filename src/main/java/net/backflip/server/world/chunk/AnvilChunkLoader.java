@@ -30,6 +30,8 @@ import java.io.RandomAccessFile;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+//TODO: Chunk File Kapazität? -> Nich dass wir mit irgend nem NBT Bullshit vollgemüllt werden ^^
+
 public class AnvilChunkLoader implements IChunkLoader {
 
     @Nonnull private final Biome voidBiome;
