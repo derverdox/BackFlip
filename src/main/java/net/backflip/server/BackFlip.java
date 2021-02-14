@@ -1,20 +1,19 @@
 package net.backflip.server;
 
 import net.backflip.server.annotations.*;
+import net.backflip.server.api.event.Listener;
 import net.backflip.server.api.extension.*;
 import net.backflip.server.api.logger.Logger;
-import net.backflip.server.api.message.Message;
-import net.backflip.server.api.player.Player;
 import net.backflip.server.api.settings.Setting;
 import net.backflip.server.api.settings.Settings;
 import net.backflip.server.commands.*;
 import net.backflip.server.enumerations.Month;
+import net.backflip.server.listeners.ChatListener;
+import net.backflip.server.listeners.CommandListener;
+import net.backflip.server.listeners.JoinListener;
 import net.backflip.server.world.generator.WorldGenerator;
 import net.backflip.server.world.WorldManager;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.entity.GameMode;
-import net.minestom.server.event.player.PlayerChatEvent;
-import net.minestom.server.event.player.PlayerCommandEvent;
 import net.minestom.server.event.player.PlayerLoginEvent;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.extras.MojangAuth;
@@ -72,17 +71,21 @@ public class BackFlip {
     private static final BackFlip instance = new BackFlip();
 
     @Nonnull
+    private final List<Listener> listeners = new ArrayList<>();
+    @Nonnull
+    private final MinecraftServer server;
+    @Nonnull
+    private final WorldManager worldManager;
+
+    @Nonnull
     public static BackFlip getInstance() {
         return instance;
     }
 
     @Nonnull
-    public String getVersion() {
-        return "BackFlip v0.1";
+    private List<Listener> getListeners() {
+        return listeners;
     }
-
-    @Nonnull private final MinecraftServer server;
-    @Nonnull private final WorldManager worldManager;
 
     @Nonnull
     public MinecraftServer getServer() {
@@ -92,6 +95,11 @@ public class BackFlip {
     @Nonnull
     public WorldManager getWorldManager() {
         return worldManager;
+    }
+
+    @Nonnull
+    public String getVersion() {
+        return "BackFlip v0.1";
     }
 
     protected BackFlip() {
@@ -125,25 +133,10 @@ public class BackFlip {
         connectionManager.addPlayerInitialization(player -> {
             player.addEventCallback(PlayerLoginEvent.class, event -> event.setSpawningInstance(instance));
             player.addEventCallback(PlayerSpawnEvent.class, event -> player.teleport(new Position(0, 140, 0)));
-            player.addEventCallback(PlayerSpawnEvent.class,playerSpawnEvent -> playerSpawnEvent.getPlayer().setGameMode(GameMode.CREATIVE));
         });
-        MinecraftServer.getGlobalEventHandler().addEventCallback(PlayerCommandEvent.class, event -> {
-            if (!CommandManager.onCommand(event.getCommand(), new Player(event.getPlayer()).getExecutor())) {
-                event.getPlayer().sendMessage("§cThe Command §8(§4" + event.getCommand().split("")[0] + "§8)§c doesn't exist");
-            }
-        });
-        MinecraftServer.getGlobalEventHandler().addEventCallback(PlayerChatEvent.class, event -> {
-            event.setCancelled(true);
-            for (net.minestom.server.entity.Player all : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
-                all.sendMessage("§f" + all.getUsername() + " §8» §f" + event.getMessage());
-            }
-        });
-        MinecraftServer.getGlobalEventHandler().addEventCallback(PlayerLoginEvent.class, event -> {
-            event.getPlayer().setGameMode(GameMode.CREATIVE);
-            event.getPlayer().setAllowFlying(true);
-            event.getPlayer().setFlyingSpeed(0.5f);
-            event.getPlayer().setPermissionLevel(4);
-        });
+        addEventListener(new ChatListener());
+        addEventListener(new JoinListener());
+        addEventListener(new CommandListener());
     }
 
     protected void start(String... args) {
@@ -184,5 +177,13 @@ public class BackFlip {
         });
         Logger.info("Started server on '" + Settings.HOST_ADDRESS.getValue() + ":" + Settings.PORT.getValue() + "'");
         MinecraftServer.setBrandName("§9" + getVersion() + "§r");
+    }
+
+    public void addEventListener(@Nonnull Listener listener) {
+        getListeners().add(listener);
+    }
+
+    public void removeEventListener(@Nonnull Listener listener) {
+        getListeners().remove(listener);
     }
 }
