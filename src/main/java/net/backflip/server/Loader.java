@@ -1,11 +1,10 @@
 package net.backflip.server;
 
-import net.backflip.server.api.message.Message;
-import net.backflip.server.api.settings.Settings;
+import net.minestom.server.Bootstrap;
 
 public class Loader {
 
     public static void main(String[] args) {
-        BackFlip.getInstance().start(args);
+        Bootstrap.bootstrap("net.backflip.server.BackFlip", args);
     }
 }

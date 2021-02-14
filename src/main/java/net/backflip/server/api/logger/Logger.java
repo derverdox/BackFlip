@@ -4,6 +4,7 @@ import net.backflip.server.api.message.Message;
 import net.backflip.server.api.settings.Settings;
 
 import javax.annotation.Nonnull;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public abstract class Logger {
@@ -42,20 +43,20 @@ public abstract class Logger {
     }
 
     public static void info(@Nonnull Object value) {
-        print(Message.LOG_INFO.getText().replace("%thread%", Thread.currentThread().getName()).replace("%time%", Calendar.getInstance().getTime().getHours() + ":" + Calendar.getInstance().getTime().getMinutes() + ":" + Calendar.getInstance().getTime().getSeconds()), value);
+        print(Message.LOG_INFO.getText().replace("%thread%", Thread.currentThread().getName()).replace("%time%", new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime())), value);
     }
 
     public static void warn(@Nonnull Object value) {
-        print(Message.LOG_WARN.getText().replace("%thread%", Thread.currentThread().getName()).replace("%time%", Calendar.getInstance().getTime().getHours() + ":" + Calendar.getInstance().getTime().getMinutes() + ":" + Calendar.getInstance().getTime().getSeconds()), value);
+        print(Message.LOG_WARN.getText().replace("%thread%", Thread.currentThread().getName()).replace("%time%", new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime())), value);
     }
 
     public static void debug(@Nonnull Object value) {
         if (Settings.DEBUG.getValue()) {
-            print(Message.LOG_DEBUG.getText().replace("%thread%", Thread.currentThread().getName()).replace("%time%", Calendar.getInstance().getTime().getHours() + ":" + Calendar.getInstance().getTime().getMinutes() + ":" + Calendar.getInstance().getTime().getSeconds()), value);
+            print(Message.LOG_DEBUG.getText().replace("%thread%", Thread.currentThread().getName()).replace("%time%", new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime())), value);
         }
     }
 
     public static void error(@Nonnull Object value) {
-        print(Message.LOG_ERROR.getText().replace("%thread%", Thread.currentThread().getName()).replace("%time%", Calendar.getInstance().getTime().getHours() + ":" + Calendar.getInstance().getTime().getMinutes() + ":" + Calendar.getInstance().getTime().getSeconds()), value);
+        print(Message.LOG_ERROR.getText().replace("%thread%", Thread.currentThread().getName()).replace("%time%", new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime())), value);
     }
 }

@@ -60,11 +60,11 @@ public class Settings {
                             String value = (String) setting.getValue();
                             jsonObject.addProperty(setting.getKey(), value);
                             Logger.debug("§aAdded setting §8'§6" + setting.getKey() + "§8'§a with value §8'§6" + value + "§8'");
-                        } else if(setting.getValue() instanceof Boolean) {
+                        } else if (setting.getValue() instanceof Boolean) {
                             Boolean value = (Boolean) setting.getValue();
                             jsonObject.addProperty(setting.getKey(), value);
                             Logger.debug("§aAdded setting §8'§6" + setting.getKey() + "§8'§a with value §8'§6" + value + "§8'");
-                        } else if(setting.getValue() instanceof Integer) {
+                        } else if (setting.getValue() instanceof Integer) {
                             Integer value = (Integer) setting.getValue();
                             jsonObject.addProperty(setting.getKey(), value);
                             Logger.debug("§aAdded setting §8'§6" + setting.getKey() + "§8'§a with value §8'§6" + value + "§8'");
@@ -73,12 +73,9 @@ public class Settings {
                         }
                     }
                 }
-                if (!jsonElement.getAsJsonObject().equals(jsonObject)) {
-                    BufferedWriter writer = new BufferedWriter(new FileWriter(getFile()));
-                    writer.write(JsonBeautifier.beautify(jsonObject.toString()));
-                    writer.close();
-                    Logger.debug("§aUpdated and saved file §8'§6" + getFile().getAbsolutePath() + "§8'");
-                }
+                BufferedWriter writer = new BufferedWriter(new FileWriter(getFile()));
+                writer.write(JsonBeautifier.beautify(jsonObject.toString()));
+                writer.close();
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -23,8 +23,8 @@ public class Message {
     @Nonnull public static final ChatComponent NO_PERMISSION = new ChatComponent(new LanguageKey(Language.ENGLISH, "no-permission"), "§cYou have no Rights §8(§4%permission%§8)");
     @Nonnull public static final ChatComponent COMMAND_EXCEPTION = new ChatComponent(new LanguageKey(Language.ENGLISH, "command-exception"), "§cAn error has occurred");
     @Nonnull public static final ChatComponent UNKNOWN_COMMAND = new ChatComponent(new LanguageKey(Language.ENGLISH, "unknown-command"), "§cThe Command §8(§4%command%§8)§c doesn't exist");
-    @Nonnull public static final ChatComponent PLAYER_COMMAND = new ChatComponent(new LanguageKey(Language.ENGLISH, "player-command"), "§cThis is a Player command");
-    @Nonnull public static final ChatComponent CONSOLE_COMMAND = new ChatComponent(new LanguageKey(Language.ENGLISH, "player-command"), "§cThis is a Console command");
+    @Nonnull public static final ChatComponent PLAYER_COMMAND = new ChatComponent(new LanguageKey(Language.ENGLISH, "player-command"), "§cThis is a player command");
+    @Nonnull public static final ChatComponent CONSOLE_COMMAND = new ChatComponent(new LanguageKey(Language.ENGLISH, "console-command"), "§cThis is a console command");
     @Nonnull public static final ChatComponent KICKED = new ChatComponent(new LanguageKey(Language.ENGLISH, "kicked"), "§cYou got kicked");
     @Nonnull public static final ChatComponent BANNED = new ChatComponent(new LanguageKey(Language.ENGLISH, "banned"), "§cYou got banned");
     @Nonnull public static final ChatComponent FIRST_JOIN_MESSAGE = new ChatComponent(new LanguageKey(Language.ENGLISH, "first-join-message"), "§6%player%§a joined the game §8(§7the first time§8)");
@@ -41,7 +41,7 @@ public class Message {
                     jsonElement = new JsonObject();
                 }
                 if (jsonElement.isJsonObject()) {
-                    JsonObject jsonObject = jsonElement.getAsJsonObject().deepCopy();
+                    JsonObject jsonObject = jsonElement.getAsJsonObject();
                     for (ChatComponent component : ChatComponent.getMessages()) {
                         if (jsonObject.keySet().contains(component.getLanguageKey().getKey())) {
                             String value = jsonObject.get(component.getLanguageKey().getKey()).getAsString();
@@ -53,12 +53,9 @@ public class Message {
                             }
                         }
                     }
-                    if (!jsonElement.getAsJsonObject().equals(jsonObject)) {
-                        BufferedWriter writer = new BufferedWriter(new FileWriter(language.getFile()));
-                        writer.write(JsonBeautifier.beautify(jsonObject.toString()));
-                        writer.close();
-                        Logger.debug("§aUpdated and saved file §8'§6" + language.getFile().getAbsolutePath() + "§8'");
-                    }
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(language.getFile()));
+                    writer.write(JsonBeautifier.beautify(jsonObject.toString()));
+                    writer.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();

@@ -103,7 +103,7 @@ public class BackFlip {
     }
 
     protected BackFlip() {
-        Logger.info("Starting Backflip Server " + getVersion());
+        Logger.info("§aStarting Backflip Server §8'§6" + getVersion() + "§8'");
         this.server = MinecraftServer.init();
         this.worldManager = new WorldManager(getInstance(), 6);
         if (Settings.MOJANG_AUTHENTICATION.getValue()) {
@@ -122,6 +122,10 @@ public class BackFlip {
         MinecraftServer.getCommandManager().register(new GameModeCommand());
 
         CommandManager.registerCommand(new DifficultyCommand("difficulty"));
+    }
+
+    public static void main(String[] args) {
+        getInstance().start(args);
     }
 
     protected void load() {
@@ -152,15 +156,15 @@ public class BackFlip {
                         try {
                             if (setting.getValue() instanceof String) {
                                 ((Setting<String>) setting).setValue(value);
-                                Logger.debug("Loaded setting '" + key + "' with value '" + value + "'");
+                                Logger.debug("§aLoaded setting §8'§6" + key + "§8' with value §8'§6" + value + "§8'");
                             } else if (setting.getValue() instanceof Boolean) {
                                 ((Setting<Boolean>) setting).setValue(Boolean.parseBoolean(value));
-                                Logger.debug("Loaded setting '" + key + "' with value '" + value + "'");
+                                Logger.debug("§aLoaded setting §8'§6" + key + "§8' with value §8'§6" + value + "§8'");
                             } else if (setting.getValue() instanceof Integer) {
                                 ((Setting<Integer>) setting).setValue(Integer.parseInt(value));
-                                Logger.debug("Loaded setting '" + key + "' with value '" + value + "'");
+                                Logger.debug("§aLoaded setting §8'§6" + key + "§8' with value §8'§6" + value + "§8'");
                             } else {
-                                Logger.warn("Unset Setting Type '" + setting.getValue().getClass().getSimpleName() + "'");
+                                Logger.warn("§cUnset Setting Type §8'§4" + setting.getValue().getClass().getSimpleName() + "§8'");
                             }
                         } catch (NumberFormatException ignored) {
                         }
@@ -175,7 +179,7 @@ public class BackFlip {
             responseData.addPlayer("Verdox", UUID.randomUUID());
             responseData.setDescription("§8» §f§lBackFlip");
         });
-        Logger.info("Started server on '" + Settings.HOST_ADDRESS.getValue() + ":" + Settings.PORT.getValue() + "'");
+        Logger.info("§aStarted server on §8'§6" + Settings.HOST_ADDRESS.getValue() + ":" + Settings.PORT.getValue() + "§8'");
         MinecraftServer.setBrandName("§9" + getVersion() + "§r");
     }
 
