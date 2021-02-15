@@ -1,6 +1,7 @@
 package net.backflip.server.api.player;
 
-import net.backflip.server.api.message.ChatComponent;
+import net.backflip.server.api.logger.Logger;
+import net.backflip.server.api.message.*;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.network.player.PlayerConnection;
@@ -32,7 +33,25 @@ public class Player extends net.minestom.server.entity.Player implements PlayerA
 
     @Override
     public void sendMessage(@Nonnull ChatComponent component) {
-        sendMessage(component.getComponent());
+        sendMessage(component.getText());
+    }
+
+    public void sendMessage(@Nonnull MessageKey messageKey, Placeholder... placeholders) {
+        Language language = Language.fromLocale(getSettings().getLocale());
+        if (language != null) {
+            LanguageKey languageKey = new LanguageKey(language, messageKey);
+            ChatComponent component = Message.valueOf(languageKey);
+            if (component != null) {
+                for (Placeholder placeholder : placeholders) {
+                    component.setText(component.getText().replace("%" + placeholder.getPlaceholder() + "%", placeholder.getObject().toString()));
+                }
+                sendMessage(component.getText());
+            } else {
+                Logger.warn("§cUnknown component§8: §4" + languageKey.toString());
+            }
+        } else {
+            Logger.warn("§cUnknown language§8: §4" + getSettings().getLocale());
+        }
     }
 
     @Override

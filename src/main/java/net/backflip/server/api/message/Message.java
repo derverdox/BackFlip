@@ -8,6 +8,7 @@ import net.backflip.server.api.json.JsonFile;
 import net.backflip.server.api.logger.Logger;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -15,22 +16,35 @@ import java.io.IOException;
 
 public class Message {
 
-    @Nonnull public static final ChatComponent LOG_INFO = new ChatComponent(new LanguageKey(Language.ROOT, "log-info"), "§8[§1%time% §8|§1 Info §8| §1%thread%§8]§r");
-    @Nonnull public static final ChatComponent LOG_WARN = new ChatComponent(new LanguageKey(Language.ROOT, "log-warn"), "§8[§e%time% §8|§e Warning §8| §e%thread%§8]§r");
-    @Nonnull public static final ChatComponent LOG_ERROR = new ChatComponent(new LanguageKey(Language.ROOT, "log-error"), "§8[§4%time% §8|§4 Error §8| §4%thread%§8]§r");
-    @Nonnull public static final ChatComponent LOG_DEBUG = new ChatComponent(new LanguageKey(Language.ROOT, "log-debug"), "§8[§6%time% §8|§6 Debug §8| §6%thread%§8]§r");
-    @Nonnull public static final ChatComponent PREFIX = new ChatComponent(new LanguageKey(Language.ROOT, "prefix"), "§f§lBackFlip §8»");
-    @Nonnull public static final ChatComponent NO_PERMISSION = new ChatComponent(new LanguageKey(Language.ENGLISH, "no-permission"), "§cYou have no Rights §8(§4%permission%§8)");
-    @Nonnull public static final ChatComponent COMMAND_EXCEPTION = new ChatComponent(new LanguageKey(Language.ENGLISH, "command-exception"), "§cAn error has occurred");
-    @Nonnull public static final ChatComponent UNKNOWN_COMMAND = new ChatComponent(new LanguageKey(Language.ENGLISH, "unknown-command"), "§cThe Command §8(§4%command%§8)§c doesn't exist");
-    @Nonnull public static final ChatComponent PLAYER_COMMAND = new ChatComponent(new LanguageKey(Language.ENGLISH, "player-command"), "§cThis is a player command");
-    @Nonnull public static final ChatComponent CONSOLE_COMMAND = new ChatComponent(new LanguageKey(Language.ENGLISH, "console-command"), "§cThis is a console command");
-    @Nonnull public static final ChatComponent KICKED = new ChatComponent(new LanguageKey(Language.ENGLISH, "kicked"), "§cYou got kicked");
-    @Nonnull public static final ChatComponent BANNED = new ChatComponent(new LanguageKey(Language.ENGLISH, "banned"), "§cYou got banned");
-    @Nonnull public static final ChatComponent FIRST_JOIN_MESSAGE = new ChatComponent(new LanguageKey(Language.ENGLISH, "first-join-message"), "§6%player%§a joined the game §8(§7the first time§8)");
-    @Nonnull public static final ChatComponent JOIN_MESSAGE = new ChatComponent(new LanguageKey(Language.ENGLISH, "join-message"), "§6%player%§a joined the game");
-    @Nonnull public static final ChatComponent QUIT_MESSAGE = new ChatComponent(new LanguageKey(Language.ENGLISH, "quit-message"), "§4%player%§c left the game");
-    @Nonnull public static final ChatComponent KICK_MESSAGE = new ChatComponent(new LanguageKey(Language.ENGLISH, "kick-message"), "§4%player%§c left the game §8(§7got kicked§8)");
+    @Nonnull public static final ChatComponent LOG_INFO = new ChatComponent(new LanguageKey(Language.ROOT, MessageKey.LOG_INFO), "§8[§1%time% §8|§1 Info §8| §1%thread%§8]§r");
+    @Nonnull public static final ChatComponent LOG_WARN = new ChatComponent(new LanguageKey(Language.ROOT, MessageKey.LOG_WARN), "§8[§e%time% §8|§e Warning §8| §e%thread%§8]§r");
+    @Nonnull public static final ChatComponent LOG_ERROR = new ChatComponent(new LanguageKey(Language.ROOT, MessageKey.LOG_ERROR), "§8[§4%time% §8|§4 Error §8| §4%thread%§8]§r");
+    @Nonnull public static final ChatComponent LOG_DEBUG = new ChatComponent(new LanguageKey(Language.ROOT, MessageKey.LOG_DEBUG), "§8[§6%time% §8|§6 Debug §8| §6%thread%§8]§r");
+    @Nonnull public static final ChatComponent PREFIX = new ChatComponent(new LanguageKey(Language.ROOT, MessageKey.PREFIX), "§f§lBackFlip §8»");
+
+    @Nonnull public static final ChatComponent NO_PERMISSION_EN = new ChatComponent(new LanguageKey(Language.ENGLISH, MessageKey.NO_PERMISSION), "§cYou have no Rights §8(§4%permission%§8)");
+    @Nonnull public static final ChatComponent COMMAND_EXCEPTION_EN = new ChatComponent(new LanguageKey(Language.ENGLISH, MessageKey.COMMAND_EXCEPTION), "§cAn error has occurred");
+    @Nonnull public static final ChatComponent UNKNOWN_COMMAND_EN = new ChatComponent(new LanguageKey(Language.ENGLISH, MessageKey.UNKNOWN_COMMAND), "§cThe Command §8(§4%command%§8)§c doesn't exist");
+    @Nonnull public static final ChatComponent PLAYER_COMMAND_EN = new ChatComponent(new LanguageKey(Language.ENGLISH, MessageKey.PLAYER_COMMAND), "§cThis is a player command");
+    @Nonnull public static final ChatComponent CONSOLE_COMMAND_EN = new ChatComponent(new LanguageKey(Language.ENGLISH, MessageKey.CONSOLE_COMMAND), "§cThis is a console command");
+    @Nonnull public static final ChatComponent KICKED_EN = new ChatComponent(new LanguageKey(Language.ENGLISH, MessageKey.KICKED), "§cYou got kicked");
+    @Nonnull public static final ChatComponent BANNED_EN = new ChatComponent(new LanguageKey(Language.ENGLISH, MessageKey.BANNED), "§cYou got banned");
+    @Nonnull public static final ChatComponent FIRST_JOIN_MESSAGE_EN = new ChatComponent(new LanguageKey(Language.ENGLISH, MessageKey.FIRST_JOIN_MESSAGE), "§6%player%§a joined the game §8(§7the first time§8)");
+    @Nonnull public static final ChatComponent JOIN_MESSAGE_EN = new ChatComponent(new LanguageKey(Language.ENGLISH, MessageKey.JOIN_MESSAGE), "§6%player%§a joined the game");
+    @Nonnull public static final ChatComponent QUIT_MESSAGE_EN = new ChatComponent(new LanguageKey(Language.ENGLISH, MessageKey.QUIT_MESSAGE), "§4%player%§c left the game");
+    @Nonnull public static final ChatComponent KICK_MESSAGE_EN = new ChatComponent(new LanguageKey(Language.ENGLISH, MessageKey.KICK_MESSAGE), "§4%player%§c left the game §8(§7got kicked§8)");
+
+    @Nonnull public static final ChatComponent NO_PERMISSION_DE = new ChatComponent(new LanguageKey(Language.GERMAN, MessageKey.NO_PERMISSION), "§cDarauf hast du keine Rechte §8(§4%permission%§8)");
+    @Nonnull public static final ChatComponent COMMAND_EXCEPTION_DE = new ChatComponent(new LanguageKey(Language.GERMAN, MessageKey.COMMAND_EXCEPTION), "§cEin fehler is aufgetreten");
+    @Nonnull public static final ChatComponent UNKNOWN_COMMAND_DE = new ChatComponent(new LanguageKey(Language.GERMAN, MessageKey.UNKNOWN_COMMAND), "§cDer Command §8(§4%command%§8)§c existiert nicht");
+    @Nonnull public static final ChatComponent PLAYER_COMMAND_DE = new ChatComponent(new LanguageKey(Language.GERMAN, MessageKey.PLAYER_COMMAND), "§cDas ist ein Spieler command");
+    @Nonnull public static final ChatComponent CONSOLE_COMMAND_DE = new ChatComponent(new LanguageKey(Language.GERMAN, MessageKey.CONSOLE_COMMAND), "§cDas ist ein Konsolen command");
+    @Nonnull public static final ChatComponent KICKED_DE = new ChatComponent(new LanguageKey(Language.GERMAN, MessageKey.KICKED), "§cDu wurdest gekickt");
+    @Nonnull public static final ChatComponent BANNED_DE = new ChatComponent(new LanguageKey(Language.GERMAN, MessageKey.BANNED), "§cDu wurdest gebannt");
+    @Nonnull public static final ChatComponent FIRST_JOIN_MESSAGE_DE = new ChatComponent(new LanguageKey(Language.GERMAN, MessageKey.FIRST_JOIN_MESSAGE), "§6%player%§a ist dem server beigetreten §8(§7zum ersten mal§8)");
+    @Nonnull public static final ChatComponent JOIN_MESSAGE_DE = new ChatComponent(new LanguageKey(Language.GERMAN, MessageKey.JOIN_MESSAGE), "§6%player%§a ist dem server beigetreten");
+    @Nonnull public static final ChatComponent QUIT_MESSAGE_DE = new ChatComponent(new LanguageKey(Language.GERMAN, MessageKey.QUIT_MESSAGE), "§4%player%§c hat den server verlassen");
+    @Nonnull public static final ChatComponent KICK_MESSAGE_DE = new ChatComponent(new LanguageKey(Language.GERMAN, MessageKey.KICK_MESSAGE), "§4%player%§c hat den server verlassen §8(§7gekickt§8)");
 
     static {
         for (Language language : Language.values()) {
@@ -43,13 +57,13 @@ public class Message {
                 if (jsonElement.isJsonObject()) {
                     JsonObject jsonObject = jsonElement.getAsJsonObject();
                     for (ChatComponent component : ChatComponent.getMessages()) {
-                        if (jsonObject.keySet().contains(component.getLanguageKey().getKey())) {
-                            String value = jsonObject.get(component.getLanguageKey().getKey()).getAsString();
+                        if (jsonObject.keySet().contains(component.getLanguageKey().getMessageKey().getKey())) {
+                            String value = jsonObject.get(component.getLanguageKey().getMessageKey().getKey()).getAsString();
                             component.setText(value);
-                            Logger.debug("§aLoaded component §8'§6" + component.getLanguageKey().getKey() + "§8'§a with value §8'§6" + value + "§8'§6 for language §8'§r" + component.getLanguageKey().getLanguage().getName() + "§8'");
+                            Logger.debug("§aLoaded component §8'§6" + component.getLanguageKey().getMessageKey().getKey() + "§8'§a with value §8'§6" + value + "§8'§6 for language §8'§r" + component.getLanguageKey().getLanguage().getName() + "§8'");
                         } else {
                             if (component.getLanguageKey().getLanguage().equals(language)) {
-                                jsonObject.addProperty(component.getLanguageKey().getKey(), component.getText());
+                                jsonObject.addProperty(component.getLanguageKey().getMessageKey().getKey(), component.getText());
                             }
                         }
                     }
@@ -61,5 +75,15 @@ public class Message {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Nullable
+    public static ChatComponent valueOf(@Nonnull LanguageKey languageKey) {
+        for (ChatComponent message : ChatComponent.getMessages()) {
+            if (message.getLanguageKey().equals(languageKey)) {
+                return message;
+            }
+        }
+        return null;
     }
 }

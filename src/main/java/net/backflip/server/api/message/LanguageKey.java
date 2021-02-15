@@ -1,22 +1,23 @@
 package net.backflip.server.api.message;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 
 public class LanguageKey {
 
     @Nonnull
     private final Language language;
     @Nonnull
-    private final String key;
+    private final MessageKey messageKey;
 
-    public LanguageKey(@Nonnull Language language, @Nonnull String key) {
+    public LanguageKey(@Nonnull Language language, @Nonnull MessageKey messageKey) {
         this.language = language;
-        this.key = key;
+        this.messageKey = messageKey;
     }
 
     @Nonnull
-    public String getKey() {
-        return key;
+    public MessageKey getMessageKey() {
+        return messageKey;
     }
 
     @Nonnull
@@ -28,7 +29,20 @@ public class LanguageKey {
     public String toString() {
         return "LanguageKey{" +
                 "language=" + language +
-                ", key='" + key + '\'' +
+                ", messageKey=" + messageKey +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LanguageKey that = (LanguageKey) o;
+        return language == that.language && messageKey.equals(that.messageKey);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(language, messageKey);
     }
 }
