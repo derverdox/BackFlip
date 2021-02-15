@@ -18,13 +18,11 @@ public class JsonBeautifier {
                     }
                     break;
                 case '{':
-                //case '[':
                     prettyJSONBuilder.append(charFromUnformattedJson);
                     indentLevel++;
                     appendIndentedNewLine(indentLevel, prettyJSONBuilder);
                     break;
                 case '}':
-                //case ']':
                     indentLevel--;
                     appendIndentedNewLine(indentLevel, prettyJSONBuilder);
                     prettyJSONBuilder.append(charFromUnformattedJson);

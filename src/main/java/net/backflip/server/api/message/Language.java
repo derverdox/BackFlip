@@ -1,7 +1,6 @@
 package net.backflip.server.api.message;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.io.File;
 
 public enum Language {
@@ -47,12 +46,12 @@ public enum Language {
                 '}';
     }
 
-    @Nullable
+    @Nonnull
     public static Language fromLocale(@Nonnull String locale) {
         try {
             return valueOf(locale);
-        } catch (IllegalArgumentException e) {
-            return null;
+        } catch (IllegalArgumentException | NullPointerException e) {
+            return Language.ENGLISH;
         }
     }
 }

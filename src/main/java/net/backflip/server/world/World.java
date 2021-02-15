@@ -64,13 +64,13 @@ public class World extends InstanceContainer {
     }
 
     public void save() {
-        Logger.debug("<lime>Saving world<gray>: <gold>" + getName());
-        this.saveInstance(() -> Logger.debug("<lime>Saved world<gray>: <gold>" + getName()));
+        Logger.debug("§aSaving world§8: §6" + getName());
+        this.saveInstance(() -> Logger.debug("§aSaved world§8: §6" + getName()));
         this.getChunks().forEach(chunk -> {
             this.entityLoader.getEntityStorage(chunk.getChunkX(), chunk.getChunkZ()).saveCachedData();
             entityLoader.saveChunkEntities(chunk, null);
         });
-        this.saveInstance(() -> Logger.debug("<lime>Saved entities in world<gray>: <gold>" + getName()));
+        this.saveInstance(() -> Logger.debug("§aSaved entities in world§8: §6" + getName()));
     }
 
     private void createEventCallbacks(){

@@ -119,6 +119,5 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.arquillian.spacelift:arquillian-spacelift:1.0.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.arquillian.spacelift:arquillian-spacelift-api:1.0.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.apache.commons:commons-compress:1.8.1" level="project" />
-    <orderEntry type="library" name="TNLCommandAPI" level="project" />
   </component>
 </module>

@@ -5,16 +5,17 @@ import net.backflip.server.api.message.MessageKey;
 import net.backflip.server.api.message.Placeholder;
 import net.backflip.server.api.player.Player;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.command.CommandManager;
 import net.minestom.server.event.player.PlayerCommandEvent;
-import net.nonswag.tnl.api.command.CommandManager;
 
 public class CommandListener implements Listener {
 
     public CommandListener() {
         MinecraftServer.getGlobalEventHandler().addEventCallback(PlayerCommandEvent.class, event -> {
-            if (!CommandManager.onCommand(event.getCommand(), new Player(event.getPlayer()).getExecutor())) {
-                System.out.println(event.getPlayer().getSettings().getLocale());
-                new Player(event.getPlayer()).sendMessage(MessageKey.UNKNOWN_COMMAND, new Placeholder("command", event.getCommand().split(" ")[0]));
+            String name = event.getCommand().split(" ")[0];
+            if (!new CommandManager().commandExists(name)) {
+                event.setCancelled(true);
+                new Player(event.getPlayer()).sendMessage(MessageKey.UNKNOWN_COMMAND, new Placeholder("command", name));
             }
         });
     }

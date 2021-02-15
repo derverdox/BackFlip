@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import net.backflip.server.api.json.JsonBeautifier;
 import net.backflip.server.api.json.JsonFile;
 import net.backflip.server.api.logger.Logger;
+import net.minestom.server.MinecraftServer;
 
 import javax.annotation.Nonnull;
 import java.io.*;
@@ -31,6 +32,7 @@ public class Settings {
 
     static {
         try {
+            MinecraftServer.getGlobalEventHandler().callEvent(SettingsInitializeEvent.class, new SettingsInitializeEvent());
             JsonFile.create(getFile());
             JsonElement jsonElement = JsonParser.parseReader(new FileReader(getFile()));
             if (!(jsonElement instanceof JsonObject)) {

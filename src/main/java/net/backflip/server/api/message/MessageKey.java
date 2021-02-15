@@ -8,6 +8,9 @@ public class MessageKey {
     @Nonnull public static MessageKey LOG_ERROR = new MessageKey("log-error");
     @Nonnull public static MessageKey LOG_DEBUG = new MessageKey("log-debug");
     @Nonnull public static MessageKey PREFIX = new MessageKey("prefix");
+    @Nonnull public static MessageKey MOTD = new MessageKey("motd");
+    @Nonnull public static MessageKey MOTD_VERSION = new MessageKey("motd-version");
+    @Nonnull public static MessageKey SERVER_BRAND = new MessageKey("server-brand");
 
     @Nonnull public static MessageKey NO_PERMISSION = new MessageKey("no-permission");
     @Nonnull public static MessageKey COMMAND_EXCEPTION = new MessageKey("command-exception");
@@ -20,6 +23,7 @@ public class MessageKey {
     @Nonnull public static MessageKey JOIN_MESSAGE = new MessageKey("join-message");
     @Nonnull public static MessageKey QUIT_MESSAGE = new MessageKey("quit-message");
     @Nonnull public static MessageKey KICK_MESSAGE = new MessageKey("kick-message");
+    @Nonnull public static MessageKey WORLD_SAVED = new MessageKey("world-saved");
 
     @Nonnull private final String key;
 

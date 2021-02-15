@@ -32,6 +32,15 @@ public class ChatComponent {
         this.text = text;
     }
 
+    @Nonnull
+    public String getText(@Nonnull Placeholder... placeholders) {
+        String text = this.text;
+        for (Placeholder placeholder : placeholders) {
+            text = text.replace("%" + placeholder.getPlaceholder() + "%", placeholder.getObject().toString());
+        }
+        return text;
+    }
+
     @Override
     public String toString() {
         return "ChatComponent{" +

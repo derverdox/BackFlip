@@ -4,6 +4,8 @@ import net.backflip.server.annotations.*;
 import net.backflip.server.api.event.Listener;
 import net.backflip.server.api.extension.*;
 import net.backflip.server.api.logger.Logger;
+import net.backflip.server.api.message.Message;
+import net.backflip.server.api.message.Placeholder;
 import net.backflip.server.api.settings.Setting;
 import net.backflip.server.api.settings.Settings;
 import net.backflip.server.commands.*;
@@ -24,13 +26,11 @@ import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.network.ConnectionManager;
 import net.minestom.server.utils.Position;
 import net.minestom.server.world.DimensionType;
-import net.nonswag.tnl.api.command.CommandManager;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 @Extension(name = "BackFlip",
         description = "default backflip extension",
@@ -45,9 +45,6 @@ public class BackFlip {
     /*
     TODO:
      » MetaData Interface (PersistentData)
-     » LanguageAPI (Übersetzungssystem)
-     » ChatAPI (Einheitliches Design)
-     » Main Method Settings Loader (mach ich)
      » Tab API voll ausnutzen
      » CustomModelData für custom Resource Pack kram und so :D
      ----------
@@ -55,16 +52,12 @@ public class BackFlip {
      » WeltGenerator (Werden wir save nicht selber schreiben, aber es gibt bereits ein paar gute für Minestom soweit ich weis :D
      » Eigenes BlockState System -> Das von Minestom ist bisschen unübersichtlich
      » Eigenes WorldManager System (Chunks laden ; Entladen ; Ist sowieso Performant weil Minestom nur die Frage ist wann :D-> Minestom Events)
-     » Eigenes Event System? Oder lieber das von Minestom erweitern (TNLEventAPI)
-     » Für Commands auch das Minestom Command System (TNLCommandAPI)
+     » Vanilla kram reimplementieren
      ----------
      » Eigene Plugin Schnittstelle? Oder lieber das Minestom Erweiterungssystem nutzen? (jep eigene aber mit annotations und nicht sowas wie extends JavaPlugin)
      » @Extension(String name, String version, String website, String description) -> für die infos im extension manager
      » @Inject -> zum kennzeichnen der main method -> throws InjectException
      » "backflip-extension.json" zum registrieren der main class -> { "main": "net.example.server.Extension" }
-     » hatte langeweile schau dir mal die plugin annotations an :D
-     ----------
-     » Vanilla kram reimplementieren
      */
 
     @Nonnull
@@ -120,8 +113,6 @@ public class BackFlip {
         MinecraftServer.getCommandManager().register(new SaveAllCommand());
         MinecraftServer.getCommandManager().register(new TestCommand());
         MinecraftServer.getCommandManager().register(new GameModeCommand());
-
-        CommandManager.registerCommand(new DifficultyCommand("difficulty"));
     }
 
     public static void main(String[] args) {
@@ -173,14 +164,13 @@ public class BackFlip {
             }
         }
         getServer().start(Settings.HOST_ADDRESS.getValue(), Settings.PORT.getValue(), (playerConnection, responseData) -> {
+            responseData.clearPlayers();
             responseData.setMaxPlayer(Settings.MAX_PLAYER_COUNT.getValue());
-            responseData.addPlayer("made by", UUID.randomUUID());
-            responseData.addPlayer("NonSwag", UUID.randomUUID());
-            responseData.addPlayer("Verdox", UUID.randomUUID());
-            responseData.setDescription("§8» §f§lBackFlip");
+            responseData.setName(Message.MOTD_VERSION.getText(new Placeholder("version", getVersion())));
+            responseData.setDescription(Message.MOTD.getText(new Placeholder("version", getVersion())));
         });
         Logger.info("§aStarted server on §8'§6" + Settings.HOST_ADDRESS.getValue() + ":" + Settings.PORT.getValue() + "§8'");
-        MinecraftServer.setBrandName("§9" + getVersion() + "§r");
+        MinecraftServer.setBrandName(Message.SERVER_BRAND.getText(new Placeholder("version", getVersion())));
     }
 
     public void addEventListener(@Nonnull Listener listener) {
