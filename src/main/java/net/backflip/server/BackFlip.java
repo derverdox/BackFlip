@@ -6,16 +6,14 @@ import net.backflip.server.api.extension.*;
 import net.backflip.server.api.logger.Logger;
 import net.backflip.server.api.message.Message;
 import net.backflip.server.api.message.Placeholder;
-import net.backflip.server.api.settings.Setting;
 import net.backflip.server.api.settings.Settings;
 import net.backflip.server.commands.*;
 import net.backflip.server.enumerations.Month;
-import net.backflip.server.listeners.ChatListener;
-import net.backflip.server.listeners.CommandListener;
-import net.backflip.server.listeners.JoinListener;
+import net.backflip.server.listeners.*;
 import net.backflip.server.world.generator.WorldGenerator;
 import net.backflip.server.world.WorldManager;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.command.builder.Command;
 import net.minestom.server.event.player.PlayerLoginEvent;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.extras.MojangAuth;
@@ -44,6 +42,9 @@ public class BackFlip {
 
     /*
     TODO:
+     » variable storage api
+     » permission storage
+     ----------
      » MetaData Interface (PersistentData)
      » Tab API voll ausnutzen
      » CustomModelData für custom Resource Pack kram und so :D
@@ -95,8 +96,13 @@ public class BackFlip {
         return "BackFlip v0.1";
     }
 
+    public static void main(String[] args) {
+        getInstance().start(args);
+    }
+
     protected BackFlip() {
-        Logger.info("§aStarting Backflip Server §8'§6" + getVersion() + "§8'");
+        Placeholder.Registry.register(new Placeholder("version", getVersion()));
+        Logger.info("§aStarting Backflip Server §8'§6%version%§8'");
         this.server = MinecraftServer.init();
         this.worldManager = new WorldManager(getInstance(), 6);
         if (Settings.MOJANG_AUTHENTICATION.getValue()) {
@@ -108,15 +114,24 @@ public class BackFlip {
         if (Settings.VELOCITY_SUPPORT.getValue()) {
             VelocityProxy.enable(Settings.VELOCITY_SECRET.getValue());
         }
+        registerCommands();
+        registerEvents();
         load();
-        MinecraftServer.getCommandManager().register(new StopCommand());
-        MinecraftServer.getCommandManager().register(new SaveAllCommand());
-        MinecraftServer.getCommandManager().register(new TestCommand());
-        MinecraftServer.getCommandManager().register(new GameModeCommand());
     }
 
-    public static void main(String[] args) {
-        getInstance().start(args);
+    protected void registerCommands() {
+        registerCommand(new DifficultyCommand());
+        registerCommand(new GameModeCommand());
+        registerCommand(new SaveAllCommand());
+        registerCommand(new StopCommand());
+    }
+
+    protected void registerEvents() {
+        addEventListener(new SettingsListener());
+        addEventListener(new CommandListener());
+        addEventListener(new ChatListener());
+        addEventListener(new JoinListener());
+        addEventListener(new QuitListener());
     }
 
     protected void load() {
@@ -129,9 +144,6 @@ public class BackFlip {
             player.addEventCallback(PlayerLoginEvent.class, event -> event.setSpawningInstance(instance));
             player.addEventCallback(PlayerSpawnEvent.class, event -> player.teleport(new Position(0, 140, 0)));
         });
-        addEventListener(new ChatListener());
-        addEventListener(new JoinListener());
-        addEventListener(new CommandListener());
     }
 
     protected void start(String... args) {
@@ -142,25 +154,6 @@ public class BackFlip {
                 List<String> values = new ArrayList<>(Arrays.asList(split));
                 values.remove(0);
                 String value = String.join(":", values);
-                for (Setting<?> setting : Setting.getList()) {
-                    if (key.equalsIgnoreCase(setting.getKey())) {
-                        try {
-                            if (setting.getValue() instanceof String) {
-                                ((Setting<String>) setting).setValue(value);
-                                Logger.debug("§aLoaded setting §8'§6" + key + "§8' with value §8'§6" + value + "§8'");
-                            } else if (setting.getValue() instanceof Boolean) {
-                                ((Setting<Boolean>) setting).setValue(Boolean.parseBoolean(value));
-                                Logger.debug("§aLoaded setting §8'§6" + key + "§8' with value §8'§6" + value + "§8'");
-                            } else if (setting.getValue() instanceof Integer) {
-                                ((Setting<Integer>) setting).setValue(Integer.parseInt(value));
-                                Logger.debug("§aLoaded setting §8'§6" + key + "§8' with value §8'§6" + value + "§8'");
-                            } else {
-                                Logger.warn("§cUnset Setting Type §8'§4" + setting.getValue().getClass().getSimpleName() + "§8'");
-                            }
-                        } catch (NumberFormatException ignored) {
-                        }
-                    }
-                }
             }
         }
         getServer().start(Settings.HOST_ADDRESS.getValue(), Settings.PORT.getValue(), (playerConnection, responseData) -> {
@@ -173,11 +166,26 @@ public class BackFlip {
         MinecraftServer.setBrandName(Message.SERVER_BRAND.getText(new Placeholder("version", getVersion())));
     }
 
+    private void registerCommand(@Nonnull Command command) {
+        MinecraftServer.getCommandManager().register(command);
+        Logger.debug("§aRegistered command §6" + command.getName());
+    }
+
     public void addEventListener(@Nonnull Listener listener) {
-        getListeners().add(listener);
+        if (!getListeners().contains(listener)) {
+            getListeners().add(listener);
+            Logger.debug("§aRegistered listener §6" + listener.getClass().getSimpleName());
+        } else {
+            Logger.error("§cCannot registered listener §4" + listener.getClass().getSimpleName(), "§cAlready registered");
+        }
     }
 
     public void removeEventListener(@Nonnull Listener listener) {
-        getListeners().remove(listener);
+        if (getListeners().contains(listener)) {
+            getListeners().remove(listener);
+            Logger.debug("§aUnregistered listener §6" + listener.getClass().getSimpleName());
+        } else {
+            Logger.error("§cCannot unregister listener §4" + listener.getClass().getSimpleName(), "§cWas never registered");
+        }
     }
 }

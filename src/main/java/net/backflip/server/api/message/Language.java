@@ -6,7 +6,7 @@ import java.io.File;
 public enum Language {
     ROOT("system", ""),
     ENGLISH("english", "en_us"),
-    GERMAN("german", "de_eu"),
+    GERMAN("german", "de_de"),
     ;
 
     @Nonnull
@@ -49,7 +49,12 @@ public enum Language {
     @Nonnull
     public static Language fromLocale(@Nonnull String locale) {
         try {
-            return valueOf(locale);
+            for (Language language : values()) {
+                if (language.getShorthand().equalsIgnoreCase(locale) || language.getName().equalsIgnoreCase(locale)) {
+                    return language;
+                }
+            }
+            return Language.ENGLISH;
         } catch (IllegalArgumentException | NullPointerException e) {
             return Language.ENGLISH;
         }

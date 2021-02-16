@@ -72,7 +72,7 @@ public class AnvilChunkLoader implements IChunkLoader {
 
     @Override
     public boolean loadChunk(@Nonnull Instance instance, int chunkX, int chunkZ, @Nonnull ChunkCallback callback) {
-        Logger.warn("Attempt loading at " + chunkX + ", " + chunkZ);
+        Logger.debug("Attempt loading at " + chunkX + ", " + chunkZ);
         try {
             Chunk chunk = loadMCA(instance, chunkX, chunkZ, callback);
             return chunk != null;
@@ -128,7 +128,7 @@ public class AnvilChunkLoader implements IChunkLoader {
         }
         save(chunk, column);
         try {
-            Logger.warn("Attempt saving at " + chunk.getChunkX() + ", " + chunk.getChunkZ());
+            Logger.debug("Attempt saving at " + chunk.getChunkX() + ", " + chunk.getChunkZ());
             mcaFile.writeColumn(column);
         } catch (IOException e) {
             Logger.error("Failed to save chunk " + chunkX + ", " + chunkZ);
@@ -277,7 +277,7 @@ public class AnvilChunkLoader implements IChunkLoader {
                     nbt.setString("id", block.getBlockEntityName().toString());
                     tileEntities.add(nbt);
                 } else {
-                    LOGGER.warn("Tried to save block entity for a block which is not a block entity? Block is {} at {},{},{}", customBlock, x, y, z);
+                    LOGGER.debug("Tried to save block entity for a block which is not a block entity? Block is {} at {},{},{}", customBlock, x, y, z);
                 }
             }
         }

@@ -68,7 +68,7 @@ public class World extends InstanceContainer {
         this.saveInstance(() -> Logger.debug("§aSaved world§8: §6" + getName()));
         this.getChunks().forEach(chunk -> {
             this.entityLoader.getEntityStorage(chunk.getChunkX(), chunk.getChunkZ()).saveCachedData();
-            entityLoader.saveChunkEntities(chunk, null);
+            this.entityLoader.saveChunkEntities(chunk, null);
         });
         this.saveInstance(() -> Logger.debug("§aSaved entities in world§8: §6" + getName()));
     }

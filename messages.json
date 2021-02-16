@@ -3,8 +3,9 @@
   "log-warn":"§8[§e%time% §8|§e Warning §8| §e%thread%§8]§r",
   "log-error":"§8[§4%time% §8|§4 Error §8| §4%thread%§8]§r",
   "log-debug":"§8[§6%time% §8|§6 Debug §8| §6%thread%§8]§r",
-  "prefix":"§f§lBackFlip §8»",
+  "chat-format":"§8[§f%world%§8] §f%player% §8» §f%message%",
+  "prefix":"§lBackFlip §8»",
   "motd":"§7%version% §8» §eA Minestom server",
   "motd-version":"§8» §f%version%",
-  "server-brand":"§8» §f%version%"
+  "server-brand":"§8» §f%version%§7"
 }

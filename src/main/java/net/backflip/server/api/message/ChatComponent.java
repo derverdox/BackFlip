@@ -1,5 +1,7 @@
 package net.backflip.server.api.message;
 
+import net.backflip.server.api.logger.Logger;
+
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +36,21 @@ public class ChatComponent {
 
     @Nonnull
     public String getText(@Nonnull Placeholder... placeholders) {
-        String text = this.text;
+        return ChatComponent.getText(this.text, placeholders);
+    }
+
+    @Nonnull
+    public static String getText(@Nonnull String text, @Nonnull Placeholder... placeholders) {
         for (Placeholder placeholder : placeholders) {
             text = text.replace("%" + placeholder.getPlaceholder() + "%", placeholder.getObject().toString());
+        }
+        for (String value : Placeholder.Registry.values()) {
+            Placeholder placeholder = Placeholder.Registry.valueOf(value);
+            if (placeholder != null) {
+                text = text.replace("%" + placeholder.getPlaceholder() + "%", placeholder.getObject().toString());
+            } else {
+                Logger.error("§cCannot find placeholder §8'§4" + value + "§8'§c but it is registered");
+            }
         }
         return text;
     }

@@ -1,4 +1,5 @@
 {
+  "default-gamemode":0,
   "velocity-secret":"secret",
   "host-address":"localhost",
   "auto-updater":true,
@@ -11,7 +12,9 @@
   "debug":true,
   "join-message":true,
   "quit-message":true,
-  "kick-message":true,
+  "reduce-debug-screen-information":true,
   "max-player-count":100,
-  "port":25565
+  "port":25565,
+  "client-max-chunk-render-distance":12,
+  "server-max-chunk-render-distance":6
 }

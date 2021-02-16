@@ -43,21 +43,29 @@ public abstract class Logger {
         }
     }
 
-    public static void info(@Nonnull Object value) {
-        print(Message.LOG_INFO.getText(new Placeholder("thread", Thread.currentThread().getName()), new Placeholder("time", new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()))), value);
-    }
-
-    public static void warn(@Nonnull Object value) {
-        print(Message.LOG_WARN.getText(new Placeholder("thread", Thread.currentThread().getName()), new Placeholder("time", new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()))), value);
-    }
-
-    public static void debug(@Nonnull Object value) {
-        if (Settings.DEBUG.getValue()) {
-            print(Message.LOG_DEBUG.getText(new Placeholder("thread", Thread.currentThread().getName()), new Placeholder("time", new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()))), value);
+    public static void info(@Nonnull Object... values) {
+        for (Object value : values) {
+            print(Message.LOG_INFO.getText(new Placeholder("thread", Thread.currentThread().getName()), new Placeholder("time", new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()))), value);
         }
     }
 
-    public static void error(@Nonnull Object value) {
-        print(Message.LOG_ERROR.getText(new Placeholder("thread", Thread.currentThread().getName()), new Placeholder("time", new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()))), value);
+    public static void warn(@Nonnull Object... values) {
+        for (Object value : values) {
+            print(Message.LOG_WARN.getText(new Placeholder("thread", Thread.currentThread().getName()), new Placeholder("time", new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()))), value);
+        }
+    }
+
+    public static void debug(@Nonnull Object... values) {
+        if (Settings.DEBUG.getValue()) {
+            for (Object value : values) {
+                print(Message.LOG_DEBUG.getText(new Placeholder("thread", Thread.currentThread().getName()), new Placeholder("time", new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()))), value);
+            }
+        }
+    }
+
+    public static void error(@Nonnull Object... values) {
+        for (Object value : values) {
+            print(Message.LOG_ERROR.getText(new Placeholder("thread", Thread.currentThread().getName()), new Placeholder("time", new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()))), value);
+        }
     }
 }

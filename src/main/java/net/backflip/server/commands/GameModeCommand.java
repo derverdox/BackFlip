@@ -1,16 +1,75 @@
 package net.backflip.server.commands;
 
+import net.backflip.server.api.message.MessageKey;
+import net.backflip.server.api.message.Placeholder;
+import net.backflip.server.api.player.Messenger;
+import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandSender;
 import net.minestom.server.command.builder.Arguments;
 import net.minestom.server.command.builder.Command;
+import net.minestom.server.command.builder.arguments.ArgumentType;
+import net.minestom.server.command.builder.arguments.ArgumentWord;
+import net.minestom.server.entity.GameMode;
+import net.minestom.server.entity.Player;
+import net.minestom.server.permission.Permission;
 
 public class GameModeCommand extends Command {
     public GameModeCommand() {
         super("gamemode", "gm");
-        this.setDefaultExecutor(this::execute);
+        setCondition(this::isAllowed);
+        setDefaultExecutor(this::usage);
+        ArgumentWord player = ArgumentType.Word("player");
+        GameMode[] gameModes = GameMode.values();
+        String[] names = new String[gameModes.length];
+        for (int i = 0; i < gameModes.length; i++) {
+            names[i] = gameModes[i].name().toLowerCase();
+        }
+        ArgumentWord mode = ArgumentType.Word("gamemode").from(names);
+        addSyntax(this::executeOnSelf, mode);
+        addSyntax(this::executeOnOther, player, mode);
     }
 
-    public void execute(CommandSender player, Arguments arguments) {
+    private void usage(CommandSender commandSender, Arguments arguments) {
+        if (commandSender.isPlayer()) {
+            Messenger messenger = new Messenger(commandSender.asPlayer());
+            messenger.sendMessage("§4%prefix%§c /gamemode §8[§6player§8] §8[§6gamemode§8]");
+            messenger.sendMessage("§4%prefix%§c /gamemode §8[§6gamemode§8]");
+        }
+    }
 
+    private void executeOnSelf(CommandSender commandSender, Arguments arguments) {
+        if (commandSender.isPlayer()) {
+            Messenger messenger = new Messenger(commandSender.asPlayer());
+            try {
+                GameMode gamemode = GameMode.valueOf(arguments.getObject("gamemode").toString().toUpperCase());
+                messenger.getPlayer().setGameMode(gamemode);
+                messenger.sendMessage("§6%prefix%§a Your gamemode is now §6%gamemode%", new Placeholder("gamemode", gamemode.name().toLowerCase()));
+            } catch (Exception e) {
+                messenger.sendMessage(MessageKey.COMMAND_EXCEPTION);
+            }
+        }
+    }
+
+    private void executeOnOther(CommandSender commandSender, Arguments arguments) {
+        if (commandSender.isPlayer()) {
+            Messenger messenger = new Messenger(commandSender.asPlayer());
+            try {
+                String targetName = arguments.getObject("player").toString();
+                GameMode gamemode = GameMode.valueOf(arguments.getObject("gamemode").toString().toUpperCase());
+                Player arg = MinecraftServer.getConnectionManager().getPlayer(targetName);
+                if (arg != null) {
+                    arg.setGameMode(gamemode);
+                    new Messenger(arg).sendMessage(MessageKey.CHANGED_GAMEMODE, new Placeholder("gamemode", gamemode.name().toLowerCase()));
+                } else {
+                    messenger.sendMessage("'" + targetName + "' is not a valid player name.");
+                }
+            } catch (Exception e) {
+                messenger.sendMessage(MessageKey.COMMAND_EXCEPTION);
+            }
+        }
+    }
+
+    private boolean isAllowed(CommandSender commandSender, String commandString) {
+        return commandSender.hasPermission(new Permission("backflip.command.gamemode"));
     }
 }

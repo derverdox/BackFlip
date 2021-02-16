@@ -1,0 +1,13 @@
+{
+  "no-permission":"§4%prefix%§c Darauf hast du keine Rechte §8(§4%permission%§8)",
+  "command-exception":"§4%prefix%§c Ein fehler is aufgetreten",
+  "unknown-command":"§4%prefix%§c Der Command §8(§4/%command%§8)§c existiert nicht",
+  "player-command":"§4%prefix%§c Das ist ein Spieler command",
+  "console-command":"§4%prefix%§c Das ist ein Konsolen command",
+  "kicked":"§4%prefix% §cDu wurdest gekickt%nl%§4%reason%",
+  "banned":"§4%prefix% §cDu wurdest gebannt%nl%§4%reason%",
+  "first-join-message":"§6%prefix%§6 %player%§a ist dem server beigetreten §8(§7zum ersten mal§8)",
+  "join-message":"§6%prefix%§6 %player%§a ist dem server beigetreten",
+  "quit-message":"§4%prefix%§4 %player%§c hat den server verlassen",
+  "world-saved":"§6%prefix%§a Die welt §6%world%§a wurde gespeichert"
+}

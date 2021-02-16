@@ -7,6 +7,7 @@ import net.backflip.server.api.json.JsonBeautifier;
 import net.backflip.server.api.json.JsonFile;
 import net.backflip.server.api.logger.Logger;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.entity.GameMode;
 
 import javax.annotation.Nonnull;
 import java.io.*;
@@ -14,6 +15,7 @@ import java.io.*;
 public class Settings {
 
     @Nonnull private static final File file = new File("settings.json");
+    @Nonnull public static final Setting<Byte> DEFAULT_GAMEMODE = new Setting<>("default-gamemode", GameMode.SURVIVAL.getId());
     @Nonnull public static final Setting<String> VELOCITY_SECRET = new Setting<>("velocity-secret", "secret");
     @Nonnull public static final Setting<String> HOST_ADDRESS = new Setting<>("host-address", "localhost");
     @Nonnull public static final Setting<Boolean> AUTO_UPDATER = new Setting<>("auto-updater", true);
@@ -26,9 +28,11 @@ public class Settings {
     @Nonnull public static final Setting<Boolean> DEBUG = new Setting<>("debug", true);
     @Nonnull public static final Setting<Boolean> JOIN_MESSAGE = new Setting<>("join-message", true);
     @Nonnull public static final Setting<Boolean> QUIT_MESSAGE = new Setting<>("quit-message", true);
-    @Nonnull public static final Setting<Boolean> KICK_MESSAGE = new Setting<>("kick-message", true);
+    @Nonnull public static final Setting<Boolean> REDUCE_DEBUG_SCREEN_INFORMATION = new Setting<>("reduce-debug-screen-information", true);
     @Nonnull public static final Setting<Integer> MAX_PLAYER_COUNT = new Setting<>("max-player-count", 100);
     @Nonnull public static final Setting<Integer> PORT = new Setting<>("port", 25565);
+    @Nonnull public static final Setting<Integer> CLIENT_MAX_CHUNK_RENDER_DISTANCE = new Setting<>("client-max-chunk-render-distance", 12);
+    @Nonnull public static final Setting<Integer> SERVER_MAX_CHUNK_RENDER_DISTANCE = new Setting<>("server-max-chunk-render-distance", 6);
 
     static {
         try {
@@ -50,6 +54,10 @@ public class Settings {
                             boolean value = jsonObject.get(setting.getKey()).getAsBoolean();
                             ((Setting<Boolean>) setting).setValue(value);
                             Logger.debug("§aLoaded setting §8'§6" + setting.getKey() + "§8'§a with value §8'§6" + value + "§8'");
+                        } else if (setting.getValue() instanceof Byte) {
+                            byte value = jsonObject.get(setting.getKey()).getAsByte();
+                            ((Setting<Byte>) setting).setValue(value);
+                            Logger.debug("§aLoaded setting §8'§6" + setting.getKey() + "§8'§a with value §8'§6" + value + "§8'");
                         } else if (setting.getValue() instanceof Integer) {
                             int value = jsonObject.get(setting.getKey()).getAsInt();
                             ((Setting<Integer>) setting).setValue(value);
@@ -64,6 +72,10 @@ public class Settings {
                             Logger.debug("§aAdded setting §8'§6" + setting.getKey() + "§8'§a with value §8'§6" + value + "§8'");
                         } else if (setting.getValue() instanceof Boolean) {
                             Boolean value = (Boolean) setting.getValue();
+                            jsonObject.addProperty(setting.getKey(), value);
+                            Logger.debug("§aAdded setting §8'§6" + setting.getKey() + "§8'§a with value §8'§6" + value + "§8'");
+                        } else if (setting.getValue() instanceof Byte) {
+                            Byte value = (Byte) setting.getValue();
                             jsonObject.addProperty(setting.getKey(), value);
                             Logger.debug("§aAdded setting §8'§6" + setting.getKey() + "§8'§a with value §8'§6" + value + "§8'");
                         } else if (setting.getValue() instanceof Integer) {
