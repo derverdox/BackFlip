@@ -1,6 +1,7 @@
 package net.backflip.server.api.message;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 
 public class MessageKey {
     @Nonnull public static MessageKey LOG_INFO = new MessageKey("log-info");
@@ -25,6 +26,8 @@ public class MessageKey {
     @Nonnull public static MessageKey QUIT_MESSAGE = new MessageKey("quit-message");
     @Nonnull public static MessageKey WORLD_SAVED = new MessageKey("world-saved");
     @Nonnull public static MessageKey CHANGED_GAMEMODE = new MessageKey("changed-gamemode");
+    @Nonnull public static MessageKey PLAYER_NOT_ONLINE = new MessageKey("player-not-online");
+    @Nonnull public static MessageKey NOT_A_PLAYER = new MessageKey("not-a-player");
 
     @Nonnull private final String key;
 
@@ -35,5 +38,25 @@ public class MessageKey {
     @Nonnull
     public String getKey() {
         return key;
+    }
+
+    @Override
+    public String toString() {
+        return "MessageKey{" +
+                "key='" + key + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MessageKey that = (MessageKey) o;
+        return key.equals(that.key);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(key);
     }
 }

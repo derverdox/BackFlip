@@ -9,5 +9,8 @@
   "first-join-message":"§6%prefix%§6 %player%§a joined the game §8(§7the first time§8)",
   "join-message":"§6%prefix%§6 %player%§a joined the game",
   "quit-message":"§4%prefix%§4 %player%§c left the game",
-  "world-saved":"§6%prefix%§a Saved the world §6%world%"
+  "world-saved":"§6%prefix%§a Saved the world §6%world%",
+  "changed-gamemode":"§6%prefix%§a Your gamemode is now §6%gamemode%",
+  "player-not-online":"§4%prefix%§4 %player%§c is not online",
+  "not-a-player":"§4%prefix%§4 %player%§c is not a player"
 }

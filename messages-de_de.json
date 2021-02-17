@@ -9,5 +9,8 @@
   "first-join-message":"§6%prefix%§6 %player%§a ist dem server beigetreten §8(§7zum ersten mal§8)",
   "join-message":"§6%prefix%§6 %player%§a ist dem server beigetreten",
   "quit-message":"§4%prefix%§4 %player%§c hat den server verlassen",
-  "world-saved":"§6%prefix%§a Die welt §6%world%§a wurde gespeichert"
+  "world-saved":"§6%prefix%§a Die welt §6%world%§a wurde gespeichert",
+  "changed-gamemode":"§6%prefix%§a Dein gamemode ist jetzt §6%gamemode%",
+  "player-not-online":"§4%prefix%§4 %player%§c ist nicht online",
+  "not-a-player":"§4%prefix%§4 %player%§c ist kein spieler"
 }

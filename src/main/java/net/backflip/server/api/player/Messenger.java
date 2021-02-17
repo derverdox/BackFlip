@@ -31,7 +31,7 @@ public class Messenger implements PlayerAudience {
         if (component != null) {
             getPlayer().sendMessage(component.getText(placeholders));
         } else {
-            Logger.warn("§cUnknown component§8: §4" + languageKey.toString());
+            Logger.error("§cUnknown component§8: §4" + languageKey.toString());
         }
     }
 
@@ -46,7 +46,7 @@ public class Messenger implements PlayerAudience {
         if (component != null) {
             getPlayer().kick(component.getText(placeholders));
         } else {
-            Logger.warn("§cUnknown component§8: §4" + languageKey.toString());
+            Logger.error("§cUnknown component§8: §4" + languageKey.toString());
         }
     }
 

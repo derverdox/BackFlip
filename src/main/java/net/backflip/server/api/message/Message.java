@@ -37,7 +37,9 @@ public class Message {
     @Nonnull public static final ChatComponent JOIN_MESSAGE_EN = new ChatComponent(new LanguageKey(Language.ENGLISH, MessageKey.JOIN_MESSAGE), "§6%prefix%§6 %player%§a joined the game");
     @Nonnull public static final ChatComponent QUIT_MESSAGE_EN = new ChatComponent(new LanguageKey(Language.ENGLISH, MessageKey.QUIT_MESSAGE), "§4%prefix%§4 %player%§c left the game");
     @Nonnull public static final ChatComponent WORLD_SAVED_EN = new ChatComponent(new LanguageKey(Language.ENGLISH, MessageKey.WORLD_SAVED), "§6%prefix%§a Saved the world §6%world%");
-    @Nonnull public static final ChatComponent CHANGED_GAMEMODE_EN = new ChatComponent(new LanguageKey(Language.ENGLISH, MessageKey.WORLD_SAVED), "§6%prefix%§a Your gamemode is now §6%gamemode%");
+    @Nonnull public static final ChatComponent CHANGED_GAMEMODE_EN = new ChatComponent(new LanguageKey(Language.ENGLISH, MessageKey.CHANGED_GAMEMODE), "§6%prefix%§a Your gamemode is now §6%gamemode%");
+    @Nonnull public static final ChatComponent PLAYER_NOT_ONLINE_EN = new ChatComponent(new LanguageKey(Language.ENGLISH, MessageKey.PLAYER_NOT_ONLINE), "§4%prefix%§4 %player%§c is not online");
+    @Nonnull public static final ChatComponent NO_A_PLAYER_EN = new ChatComponent(new LanguageKey(Language.ENGLISH, MessageKey.NOT_A_PLAYER), "§4%prefix%§4 %player%§c is not a player");
 
     @Nonnull public static final ChatComponent NO_PERMISSION_DE = new ChatComponent(new LanguageKey(Language.GERMAN, MessageKey.NO_PERMISSION), "§4%prefix%§c Darauf hast du keine Rechte §8(§4%permission%§8)");
     @Nonnull public static final ChatComponent COMMAND_EXCEPTION_DE = new ChatComponent(new LanguageKey(Language.GERMAN, MessageKey.COMMAND_EXCEPTION), "§4%prefix%§c Ein fehler is aufgetreten");
@@ -50,7 +52,9 @@ public class Message {
     @Nonnull public static final ChatComponent JOIN_MESSAGE_DE = new ChatComponent(new LanguageKey(Language.GERMAN, MessageKey.JOIN_MESSAGE), "§6%prefix%§6 %player%§a ist dem server beigetreten");
     @Nonnull public static final ChatComponent QUIT_MESSAGE_DE = new ChatComponent(new LanguageKey(Language.GERMAN, MessageKey.QUIT_MESSAGE), "§4%prefix%§4 %player%§c hat den server verlassen");
     @Nonnull public static final ChatComponent WORLD_SAVED_DE = new ChatComponent(new LanguageKey(Language.GERMAN, MessageKey.WORLD_SAVED), "§6%prefix%§a Die welt §6%world%§a wurde gespeichert");
-    @Nonnull public static final ChatComponent CHANGED_GAMEMODE_DE = new ChatComponent(new LanguageKey(Language.GERMAN, MessageKey.WORLD_SAVED), "§6%prefix%§a Dein gamemode ist jetzt §6%gamemode%");
+    @Nonnull public static final ChatComponent CHANGED_GAMEMODE_DE = new ChatComponent(new LanguageKey(Language.GERMAN, MessageKey.CHANGED_GAMEMODE), "§6%prefix%§a Dein gamemode ist jetzt §6%gamemode%");
+    @Nonnull public static final ChatComponent PLAYER_NOT_ONLINE_DE = new ChatComponent(new LanguageKey(Language.GERMAN, MessageKey.PLAYER_NOT_ONLINE), "§4%prefix%§4 %player%§c ist nicht online");
+    @Nonnull public static final ChatComponent NO_A_PLAYER_DE = new ChatComponent(new LanguageKey(Language.GERMAN, MessageKey.NOT_A_PLAYER), "§4%prefix%§4 %player%§c ist kein spieler");
 
     static {
         for (Language language : Language.values()) {

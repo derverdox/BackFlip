@@ -9,6 +9,7 @@ import net.minestom.server.command.builder.Arguments;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.arguments.ArgumentWord;
+import net.minestom.server.command.builder.arguments.minecraft.ArgumentEntity;
 import net.minestom.server.entity.GameMode;
 import net.minestom.server.entity.Player;
 import net.minestom.server.permission.Permission;
@@ -18,7 +19,7 @@ public class GameModeCommand extends Command {
         super("gamemode", "gm");
         setCondition(this::isAllowed);
         setDefaultExecutor(this::usage);
-        ArgumentWord player = ArgumentType.Word("player");
+        ArgumentEntity entities = ArgumentType.Entities("player");
         GameMode[] gameModes = GameMode.values();
         String[] names = new String[gameModes.length];
         for (int i = 0; i < gameModes.length; i++) {
@@ -26,14 +27,13 @@ public class GameModeCommand extends Command {
         }
         ArgumentWord mode = ArgumentType.Word("gamemode").from(names);
         addSyntax(this::executeOnSelf, mode);
-        addSyntax(this::executeOnOther, player, mode);
+        addSyntax(this::executeOnOther, mode, entities);
     }
 
     private void usage(CommandSender commandSender, Arguments arguments) {
         if (commandSender.isPlayer()) {
             Messenger messenger = new Messenger(commandSender.asPlayer());
-            messenger.sendMessage("§4%prefix%§c /gamemode §8[§6player§8] §8[§6gamemode§8]");
-            messenger.sendMessage("§4%prefix%§c /gamemode §8[§6gamemode§8]");
+            messenger.sendMessage("§4%prefix%§c /gamemode §8[§6gamemode§8] §8(§6player§8)");
         }
     }
 
@@ -43,7 +43,7 @@ public class GameModeCommand extends Command {
             try {
                 GameMode gamemode = GameMode.valueOf(arguments.getObject("gamemode").toString().toUpperCase());
                 messenger.getPlayer().setGameMode(gamemode);
-                messenger.sendMessage("§6%prefix%§a Your gamemode is now §6%gamemode%", new Placeholder("gamemode", gamemode.name().toLowerCase()));
+                messenger.sendMessage(MessageKey.CHANGED_GAMEMODE, new Placeholder("gamemode", gamemode.name().toLowerCase()));
             } catch (Exception e) {
                 messenger.sendMessage(MessageKey.COMMAND_EXCEPTION);
             }
@@ -54,14 +54,14 @@ public class GameModeCommand extends Command {
         if (commandSender.isPlayer()) {
             Messenger messenger = new Messenger(commandSender.asPlayer());
             try {
-                String targetName = arguments.getObject("player").toString();
+                ArgumentWord finder = ((ArgumentWord) arguments.getObject("player"));
                 GameMode gamemode = GameMode.valueOf(arguments.getObject("gamemode").toString().toUpperCase());
-                Player arg = MinecraftServer.getConnectionManager().getPlayer(targetName);
+                Player arg = MinecraftServer.getConnectionManager().getPlayer(finder.toString());
                 if (arg != null) {
                     arg.setGameMode(gamemode);
                     new Messenger(arg).sendMessage(MessageKey.CHANGED_GAMEMODE, new Placeholder("gamemode", gamemode.name().toLowerCase()));
                 } else {
-                    messenger.sendMessage("'" + targetName + "' is not a valid player name.");
+                    messenger.sendMessage(MessageKey.PLAYER_NOT_ONLINE, new Placeholder("player", finder.toString()));
                 }
             } catch (Exception e) {
                 messenger.sendMessage(MessageKey.COMMAND_EXCEPTION);
